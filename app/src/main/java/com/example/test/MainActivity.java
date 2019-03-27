@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -27,8 +31,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent serviceIntent = new Intent(this, MyService.class);
+        //serviceIntent.putExtra("userID", currentUser);
+        startService(serviceIntent);
 
         //FirebaseApp.initializeApp(this);
+
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("traps");
@@ -43,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
                 if(v.getId() == R.id.the_button) {
                     DatabaseReference objRef = myRef.child("01");
                     objRef.child("triggered").setValue(false);
+                    //objRef.setValue("triggered", false);
                 }
             }
-        });
+        });/*
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -87,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
     }
 }
