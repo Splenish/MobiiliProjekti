@@ -5,13 +5,14 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 import string
 import random
+from firebase import firebase
 
 serialNumber = "01"
 random = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
 print(random)
 camPin = 17
 camera = PiCamera()
-triggered = False
+firebase = firebase.FirebaseApplication('https://catcatch-953a5.firebaseio.com', None)
 
 class TransferData:
 
@@ -20,7 +21,7 @@ class TransferData:
         print("hier wii is")
 
     def upload_file(self, file_from, file_to):
-        print("Making db shit")
+        print("Making db thingy")
         dbx = dropbox.Dropbox(self.access_token)
 
         print("opening file")
@@ -29,22 +30,20 @@ class TransferData:
             dbx.files_upload(f.read(), file_to, mode=dropbox.files.WriteMode("overwrite"))
 
         print("getting url") 
-        result = dbx.share(file_to)
-        print(result)
+        picUrl = dbx.sharing_create_shared_link_with_settings(file_to).url
+        print(picUrl)
 
-        triggered = True
+        firebase.put('traps/' + serialNumber,"triggered", True)
+        firebase.put('traps/' + serialNumber,"url", picUrl)
 
 def take_picture(channel):
     print("Cat got")
-    if triggered == False:
-        camera.capture('/home/pi/catproject/picture_' + random + '.jpg')
+    camera.capture('/home/pi/MobiiliProjekti/Python/picture_' + random + '.jpg')
     
-        file_from = 'picture_' + random + '.jpg'
-        file_to = '/Tunnistus/picture_' + random + '.jpg'
+    file_from = 'picture_' + random + '.jpg'
+    file_to = '/Tunnistus/picture_' + random + '.jpg'
 
-        transferData.upload_file(file_from, file_to)
-    else:
-        print("too many pics")
+    transferData.upload_file(file_from, file_to)
 
 access_token = 'vh3aWw_IEX8AAAAAAAACVNfnHfGI82qV-I6sHVOlATnMuilvnyAhT1NSxrjhnQcg'
 transferData = TransferData(access_token)
