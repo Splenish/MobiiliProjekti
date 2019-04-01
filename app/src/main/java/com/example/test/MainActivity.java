@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Trap> ownedTraps = new ArrayList<>();
-    int currentUser = 1;
+    ArrayList<Trap> trapList = new ArrayList<>();
+    String currentUser = "01";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 //Log.d("FB", "owner get value: " + dataSnapshot.child("owner").getValue());
-                Trap aTrap = dataSnapshot.getValue(Trap.class);
+                //Trap aTrap = dataSnapshot.getValue(Trap.class);
                 //Log.d("FB", "Trap methronds get owner: " + aTrap.getOwner());
-                if(aTrap.getOwner() == currentUser) {
-                    ownedTraps.add(aTrap);
-                }
+                //if(aTrap.getOwner() == currentUser) {
+                //    ownedTraps.add(aTrap);
+                //}
 
             }
 
@@ -88,6 +90,18 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    configureToTrapList();
+    }
 
+
+
+    private void configureToTrapList() {
+        Button ToTrapList = (Button) findViewById(R.id.ToTrapList);
+        ToTrapList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TrapList.class));
+            }
+        });
     }
 }
