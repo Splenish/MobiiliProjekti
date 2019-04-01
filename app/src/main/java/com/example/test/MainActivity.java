@@ -1,6 +1,7 @@
 package com.example.test;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,25 +25,16 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Trap> ownedTraps = new ArrayList<>();
-    int currentUser = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent serviceIntent = new Intent(this, MyService.class);
-        //serviceIntent.putExtra("userID", currentUser);
-        startService(serviceIntent);
-
-        //FirebaseApp.initializeApp(this);
 
 
-
+        Log.d("SERVIISI2", "mainactivity on create");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("traps");
 
-        //myRef.setValue("Hello, World!");
 
         Button pushDataButton = findViewById(R.id.the_button);
         pushDataButton.setOnClickListener(new View.OnClickListener() {
@@ -55,49 +47,13 @@ public class MainActivity extends AppCompatActivity {
                     //objRef.setValue("triggered", false);
                 }
             }
-        });/*
+        });
+    }
 
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                //Log.d("FB", "owner get value: " + dataSnapshot.child("owner").getValue());
-                Trap aTrap = dataSnapshot.getValue(Trap.class);
-                //Log.d("FB", "Trap methronds get owner: " + aTrap.getOwner());
-                if(aTrap.getOwner() == currentUser) {
-                    ownedTraps.add(aTrap);
-                }
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //Log.d("FB", "on changed: " + dataSnapshot.getKey());
-                //Log.d("FB", "on changed: " + dataSnapshot.getValue());
-                //Log.d("FB", "The updated trap triggered is: " + dataSnapshot.child("triggered"));
-                Log.d("FB", "" + dataSnapshot.getKey().getClass());
-                if(dataSnapshot.getKey().equals("01")) {
-                    //Log.d("FB", "on added: " + dataSnapshot.getKey());
-                    Log.d("FB", "Loukkusi '01' on lauennut");
-                }
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
+    @Override
+    protected void onDestroy() {
+     //   IS_APP_STARTUP = true;
+        super.onDestroy();
     }
 }

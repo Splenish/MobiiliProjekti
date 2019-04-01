@@ -1,9 +1,13 @@
 package com.example.test;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +26,16 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+
 import javax.annotation.Nullable;
 
 public class MyService extends Service {
+
+    Trap trapPassedFromIntent;
+    String CHANNEL_ID = "TRIGGER";
+    boolean FIRST_ATTACH = true;
+    String currentUser;
     public MyService() {
     }
 
@@ -38,15 +49,76 @@ public class MyService extends Service {
 
     @Override
     public void onCreate() {
+        Log.d("SERVIISI", "on service create");
+        super.onCreate();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d("SERVIISI", "On service destroy");
+        super.onDestroy();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        setTrapListener(intent);
+        Log.d("SERVIISI", "on start command");
+        //currentUser = intent.getStringExtra("ownerID");
+        return START_STICKY;
+    }
+    public void notificationHandle(DataSnapshot data) {
+        Intent returnIntent = new Intent(this, MainActivity.class);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, returnIntent, 0);
+
+
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle("Loukku lauennut!")
+                .setContentText("loukkusi " + data.getRef().getParent().getKey() + " on lauennut")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                // Set the intent that will fire when the user taps the notification
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        //Log.d("TIME", "notify");
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(0, mBuilder.build());
+    }
+
+    public void setTrapListener(Intent passedIntent) {
+        trapPassedFromIntent = (Trap) passedIntent.getSerializableExtra("passedTrap");
+        //Log.d("SERVIISI", "gOT trap ID : " + trapPassedFromIntent.getTrapID());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("traps");
-        final DatabaseReference trapRefs = database.getReference("traps").child("01").child("triggered");
+        final DatabaseReference trapRefs = database.getReference("traps").child(trapPassedFromIntent.getTrapID()).child("triggered");
+        final DatabaseReference testRefs = database.getReference("traps").child(trapPassedFromIntent.getTrapID());
+
+        trapRefs.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         trapRefs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Log.d("SERVIISI", "Specific trap triggered " + dataSnapshot.getValue());
                 if(dataSnapshot.getValue().toString().equals("true")) {
-                    Log.d("SERVIISI", "loukkusi 01 on lauennut");
+                    Log.d("SERVIISI", "loukkusi " + dataSnapshot.getRef().getParent().getKey() + " on lauennut");
+                    notificationHandle(dataSnapshot);
                 }
             }
 
@@ -58,49 +130,5 @@ public class MyService extends Service {
 
         //myRef.setValue("Hello, World!");
 
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                //Log.d("SERVIISI", "owner get value: " + dataSnapshot.child("owner").getValue());
-                Trap aTrap = dataSnapshot.getValue(Trap.class);
-                //Log.d("SERVIISI", "Trap methronds get owner: " + aTrap.getOwner());
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //Log.d("SERVIISI", "on changed: " + dataSnapshot.getKey());
-                //Log.d("SERVIISI", "on changed: " + dataSnapshot.getValue());
-                //Log.d("SERVIISI", "The updated trap triggered is: " + dataSnapshot.child("triggered"));
-                //Log.d("SERVIISI", "" + dataSnapshot.getKey().getClass());
-                if(dataSnapshot.getKey().equals("01")) {
-                    //Log.d("FB", "on added: " + dataSnapshot.getKey());
-                    //Log.d("SERVIISI", "Loukkusi '01' on lauennut");
-                }
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        super.onCreate();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("SERVIISI", "on start command");
-        return super.onStartCommand(intent, flags, startId);
     }
 }

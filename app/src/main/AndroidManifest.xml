@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme">
         <service
             android:name=".MyService"
+            android:process=":my_process"
             android:enabled="true"
             android:exported="true"></service>
 
