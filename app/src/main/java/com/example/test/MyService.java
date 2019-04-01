@@ -96,21 +96,7 @@ public class MyService extends Service {
         trapPassedFromIntent = (Trap) passedIntent.getSerializableExtra("passedTrap");
         //Log.d("SERVIISI", "gOT trap ID : " + trapPassedFromIntent.getTrapID());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("traps");
         final DatabaseReference trapRefs = database.getReference("traps").child(trapPassedFromIntent.getTrapID()).child("triggered");
-        final DatabaseReference testRefs = database.getReference("traps").child(trapPassedFromIntent.getTrapID());
-
-        trapRefs.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         trapRefs.addValueEventListener(new ValueEventListener() {
             @Override

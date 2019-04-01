@@ -25,11 +25,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    ArrayList<Trap> trapList = new ArrayList<>();
+    String currentUser = "01";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getOwnedTraps();
 
         Log.d("SERVIISI2", "mainactivity on create");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -54,10 +56,46 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                intent.putExtra("trapIntent", trapList.get(Integer.parseInt(currentUser)));
                 startActivity(intent);
             }
         });
 
+    }
+
+
+    public void getOwnedTraps() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference trapRefs = database.getReference("traps");
+        trapRefs.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Trap aTrap = dataSnapshot.getValue(Trap.class);
+                if(aTrap.getOwner().equals(currentUser)) {
+                    trapList.add(aTrap);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
