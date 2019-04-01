@@ -17,6 +17,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,6 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    String currentUser = "01";
+    ArrayList<Trap> ownedTraps = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,47 @@ public class MainActivity extends AppCompatActivity {
                     objRef.child("triggered").setValue(false);
                     //objRef.setValue("triggered", false);
                 }
+            }
+        });
+        
+        addTrapsToList();
+        
+    }
+
+    public void addTrapsToList() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("traps");
+
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Trap aTrap = dataSnapshot.getValue(Trap.class);
+                Log.d("SERVIISI3", aTrap.getOwner());
+                if(currentUser.equals(aTrap.getOwner())) {
+                    ownedTraps.add(aTrap);
+                    Log.d("SERVIISI3", aTrap.getOwner() + " trap addedded");
+
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

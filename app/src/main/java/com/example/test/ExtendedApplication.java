@@ -43,7 +43,7 @@ public class ExtendedApplication extends Application {
                 //Log.d("SERVIISI", "aTrap owner get value: " + aTrap.getOwner() + " " +  currentUser);
 
                 if (aTrap.getOwner().equals(currentUser)) {
-                    Log.d("SERVIISI2", "mennään serviceen");
+                    //Log.d("SERVIISI2", "mennään serviceen");
                     startServiceIntent(aTrap);
                 }
             }
@@ -85,7 +85,7 @@ public class ExtendedApplication extends Application {
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-            Log.d("TIME", "Channel created");
+            //Log.d("TIME", "Channel created");
         }
     }
 
