@@ -48,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button mapButton = findViewById(R.id.map_button);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
