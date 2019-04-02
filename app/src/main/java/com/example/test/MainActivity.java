@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getOwnedTraps();
 
         Log.d("SERVIISI2", "mainactivity on create");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -61,9 +62,49 @@ public class MainActivity extends AppCompatActivity {
         ToTrapList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TrapList.class));
+                Intent intent = new Intent(MainActivity.this, TrapList.class);
+                intent.putExtra("trapListPassedToIntent", trapList);
+                Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
+                startActivity(intent);
             }
         });
 
     }
+
+    public void getOwnedTraps() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference trapRefs = database.getReference("traps");
+        trapRefs.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Trap aTrap = dataSnapshot.getValue(Trap.class);
+                if(aTrap.getOwner().equals(currentUser)) {
+                    Log.d("SERVIISI3", "trap added to list: " + aTrap.getTrapID());
+                    trapList.add(aTrap);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
 }

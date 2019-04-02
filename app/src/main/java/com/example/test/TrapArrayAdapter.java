@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TrapArrayAdapter extends ArrayAdapter<TrapArrayData> {
+public class TrapArrayAdapter extends ArrayAdapter<Trap> {
 
     private Context trapContext;
-    private List<TrapArrayData> TrapList2 = new ArrayList<>();
+    private List<Trap> TrapList2 = new ArrayList<>();
 
-    public TrapArrayAdapter(@NonNull Context context, ArrayList<TrapArrayData> list) {
+    public TrapArrayAdapter(@NonNull Context context, ArrayList<Trap> list) {
         super(context, 0 , list);
         trapContext = context;
         TrapList2 = list;
@@ -32,16 +32,23 @@ public class TrapArrayAdapter extends ArrayAdapter<TrapArrayData> {
         if(listItem == null)
             listItem = LayoutInflater.from(trapContext).inflate(R.layout.traplist_item,parent,false);
 
-        TrapArrayData currentTrap = TrapList2.get(position);
+        Trap currentTrap = TrapList2.get(position);
 
-        ImageView image = (ImageView)listItem.findViewById(R.id.imageView_icon);
-        image.setImageResource(currentTrap.getmImageDrawable());
+        //ImageView image = (ImageView)listItem.findViewById(R.id.imageView_icon);
+        //image.setImageResource(currentTrap.getmImageDrawable());
 
         TextView name = (TextView) listItem.findViewById(R.id.textView_name);
-        name.setText(currentTrap.gettrapName());
+        name.setText(currentTrap.getTrapID());
 
         TextView state = (TextView) listItem.findViewById(R.id.textView_release);
-        state.setText(currentTrap.gettrapState());
+        if(currentTrap.getTriggered()) {
+            state.setText("Triggered");
+        } else {
+            state.setText("Not triggered");
+        }
+
+
+
 
         return listItem;
     }

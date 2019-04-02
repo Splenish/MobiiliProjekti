@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,11 +24,12 @@ public class TrapList extends AppCompatActivity {
         setContentView(R.layout.activity_trap_list);
 
         listView = (ListView) findViewById(R.id.TrapList);
-        ArrayList<TrapArrayData> TrapList2 = new ArrayList<>();
-        TrapList2.add(new TrapArrayData(R.drawable.ic_launcher_background, "Trap" , "triggered"));
-        TrapList2.add(new TrapArrayData(R.drawable.ic_launcher_background, "Trap" , "ni cigar"));
-        TrapList2.add(new TrapArrayData(R.drawable.ic_launcher_background, "Trap" , "no cigar"));
 
+
+        //Intent intent = getIntent();
+        ArrayList<Trap> TrapList2 = (ArrayList<Trap>) getIntent().getSerializableExtra("trapListPassedToIntent");
+        Log.d("SERVIISI3","Intentistä saatu list size: " + TrapList2.size());
+        Log.d("SERVIISI3","Paskaa: " + TrapList2.isEmpty());
         trapAdapter = new TrapArrayAdapter(this,TrapList2);
         listView.setAdapter(trapAdapter);
 
