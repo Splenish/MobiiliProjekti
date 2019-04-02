@@ -1,7 +1,6 @@
 package com.example.test;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -27,11 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Trap> trapList = new ArrayList<>();
     String currentUser = "01";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         getOwnedTraps();
+        configureToTrapList();
 
         Log.d("SERVIISI2", "mainactivity on create");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -99,9 +101,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-     //   IS_APP_STARTUP = true;
-        super.onDestroy();
+
+
+    private void configureToTrapList() {
+        Button ToTrapList = (Button) findViewById(R.id.ToTrapList);
+        ToTrapList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TrapList.class);
+                intent.putExtra("trapListPassedToIntent", trapList);
+                Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
+                startActivity(intent);
+            }
+        });
+
     }
+
 }
