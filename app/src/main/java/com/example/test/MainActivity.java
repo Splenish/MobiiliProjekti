@@ -58,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                intent.putExtra("trapIntent", trapList.get(Integer.parseInt(currentUser)));
+                //intent.putExtra("trapIntent", trapList.get(Integer.parseInt(currentUser)));
+
+                intent.putExtra("trapIntent", trapList.get(0));
                 startActivity(intent);
             }
         });
