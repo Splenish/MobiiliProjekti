@@ -15,6 +15,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +29,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     Trap trapPassedFromIntent;
     private ValueEventListener listener;
     String posString;
+    Marker trapMarker;
 
 
     @Override
@@ -42,12 +44,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        Log.d("PASKAMAKE", "paskamake");
         Intent intent = getIntent();
         trapPassedFromIntent = (Trap) intent.getSerializableExtra("trapIntent");
-
-
-        Log.d("PASKAMAKE", "trap pos" + trapPassedFromIntent.getPos());
         posString = trapPassedFromIntent.getPos();
 
 
@@ -57,14 +55,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //final DatabaseReference trapRefs = database.getReference("traps").child(trapPassedFromIntent.getTrapID()).child("pos");
-        final DatabaseReference trapRefs = database.getReference("traps").child("01").child("pos");
+        final DatabaseReference trapRefs = database.getReference("traps").child(trapPassedFromIntent.getTrapID()).child("pos");
+        //final DatabaseReference trapRefs = database.getReference("traps").child("01").child("pos");
 
         listener = trapRefs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Log.d("SERVIISI", "Specific trap triggered " + dataSnapshot.getValue());
-                Log.d("PASKAMAKE", dataSnapshot.getValue().toString());
+                posString = dataSnapshot.getValue().toString();
+                updateMarker();
+                Log.d("PASKAMAKE", "on data change" + dataSnapshot.getValue().toString());
             }
 
             @Override
@@ -77,20 +77,37 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Log.d("PASKAMAKE", "on map ready");
-        // Add a marker in Sydney, Australia, and move the camera.
+        putMarkerToCoord();
 
+    }
+
+    public void putMarkerToCoord() {
         String[] latLng = posString.split(",");
 
         float lat = Float.parseFloat(latLng[0]);
         float lng = Float.parseFloat(latLng[1]);
 
-        LatLng sydney = new LatLng(lat, lng);
+        LatLng trapLocation = new LatLng(lat, lng);
 
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        Log.d("PASKAMAKE", "on map ready");
+        trapMarker = mMap.addMarker(new MarkerOptions().position(trapLocation).title("Trap 01"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
+
+    public void updateMarker() {
+        String[] latLng = posString.split(",");
+
+        float lat = Float.parseFloat(latLng[0]);
+        float lng = Float.parseFloat(latLng[1]);
+
+        LatLng trapLocation = new LatLng(lat, lng);
+
+        trapMarker.setPosition(trapLocation);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
+    }
+
+
+
 
 
     @Override
