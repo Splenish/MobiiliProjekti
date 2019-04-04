@@ -37,7 +37,7 @@ class TransferData:
         picUrl += "?raw=1"
 
         firebase.put('traps/' + serialNumber,"triggered", True)
-        firebase.put('traps/' + serialNumber,"url", picUrl)
+        firebase.put('traps/' + serialNumber,"urlString", picUrl)
 
 def take_picture(channel):
     print("Cat got")
