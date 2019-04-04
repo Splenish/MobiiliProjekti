@@ -1,6 +1,8 @@
 package com.example.test;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +11,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +26,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -34,20 +44,40 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        Log.d("PASKAMAKE", "vittu");
+        //Log.d("PASKAMAKE", "vittu");
         super.onCreate(savedInstanceState, persistentState);
-        Log.d("PASKAMAKE", "saatana");
+        //Log.d("PASKAMAKE", "saatana");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
+        TextView trapName = findViewById(R.id.teksti);
+        TextView trapStateText = findViewById(R.id.trap_state_text);
         Intent intent = getIntent();
+
         trapPassedFromIntent = (Trap) intent.getSerializableExtra("trapIntent");
         posString = trapPassedFromIntent.getPos();
 
+        trapName.setText("Trap " + trapPassedFromIntent.getTrapID());
+        if(trapPassedFromIntent.getTriggered()) {
+            trapStateText.setText("Trap triggered");
+        } else {
+            trapStateText.setText("Trap not triggered");
+        }
+
+
+        ImageView cat_pic = findViewById(R.id.cat_pic);
+
+        //Picasso.with(getContext()).load(getString(R.string.default_trap_pic_url)).fit().into(cat_pic);
+
+        if(trapPassedFromIntent.getTriggered()) {
+            Picasso.get().load(trapPassedFromIntent.getUrlString()).into(cat_pic);
+            Log.d("MAPPIA", "url string " + trapPassedFromIntent.getUrlString());
+        } else {
+            Picasso.get().load(getString(R.string.default_trap_pic_url)).into(cat_pic);
+        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -64,7 +94,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 //Log.d("SERVIISI", "Specific trap triggered " + dataSnapshot.getValue());
                 posString = dataSnapshot.getValue().toString();
                 updateMarker();
-                Log.d("PASKAMAKE", "on data change" + dataSnapshot.getValue().toString());
+                //Log.d("PASKAMAKE", "on data change" + dataSnapshot.getValue().toString());
             }
 
             @Override

@@ -49,47 +49,63 @@ public class MyService extends Service {
 
     @Override
     public void onCreate() {
-        Log.d("SERVIISI", "on service create");
+        //Log.d("SERVIISI", "on service create");
         super.onCreate();
     }
 
     @Override
     public void onDestroy() {
-        Log.d("SERVIISI", "On service destroy");
+        //Log.d("SERVIISI", "On service destroy");
         super.onDestroy();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         setTrapListener(intent);
-        Log.d("SERVIISI", "on start command");
+        //Log.d("SERVIISI", "on start command");
         //currentUser = intent.getStringExtra("ownerID");
         return START_STICKY;
     }
     public void notificationHandle(DataSnapshot data) {
-        Intent returnIntent = new Intent(this, MainActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, returnIntent, 0);
+        //Intent returnIntent = new Intent(this, MainActivity.class);
+        Log.d("MAPPIA", "data get key: " + data.getKey().toString());
+        data.getRef().getParent().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Log.d("MAPPIA", "nyt ollaan jännän äärellä.");
+
+                Trap aTrap = dataSnapshot.getValue(Trap.class);
+
+                Intent returnIntent = new Intent(getBaseContext(), MapActivity.class);
+                returnIntent.putExtra("trapIntent", aTrap);
+
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, returnIntent, 0);
 
 
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle("Loukku lauennut!")
-                .setContentText("loukkusi " + data.getRef().getParent().getKey() + " on lauennut")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                // Set the intent that will fire when the user taps the notification
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getBaseContext(), CHANNEL_ID)
+                        .setSmallIcon(R.drawable.notification_icon)
+                        .setContentTitle("Loukku lauennut!")
+                        .setContentText("loukkusi " + aTrap.getTrapID() + " on lauennut")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        // Set the intent that will fire when the user taps the notification
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
 
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getBaseContext());
 
+                // notificationId is a unique int for each notification that you must define
+                notificationManager.notify(0, mBuilder.build());
+            }
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        //Log.d("TIME", "notify");
+            }
+        });
 
-        // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(0, mBuilder.build());
     }
 
     public void setTrapListener(Intent passedIntent) {
@@ -103,7 +119,7 @@ public class MyService extends Service {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Log.d("SERVIISI", "Specific trap triggered " + dataSnapshot.getValue());
                 if(dataSnapshot.getValue().toString().equals("true")) {
-                    Log.d("SERVIISI", "loukkusi " + dataSnapshot.getRef().getParent().getKey() + " on lauennut");
+                    //Log.d("SERVIISI", "loukkusi " + dataSnapshot.getRef().getParent().getKey() + " on lauennut");
                     notificationHandle(dataSnapshot);
                 }
             }

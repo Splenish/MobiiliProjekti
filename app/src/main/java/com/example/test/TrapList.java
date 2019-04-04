@@ -27,11 +27,19 @@ public class TrapList extends AppCompatActivity {
 
 
         //Intent intent = getIntent();
-        ArrayList<Trap> TrapList2 = (ArrayList<Trap>) getIntent().getSerializableExtra("trapListPassedToIntent");
-        Log.d("SERVIISI3","Intentistä saatu list size: " + TrapList2.size());
-        Log.d("SERVIISI3","Paskaa: " + TrapList2.isEmpty());
+        final ArrayList<Trap> TrapList2 = (ArrayList<Trap>) getIntent().getSerializableExtra("trapListPassedToIntent");
+        //Log.d("SERVIISI3","Intentistä saatu list size: " + TrapList2.size());
+        //Log.d("SERVIISI3","Paskaa: " + TrapList2.isEmpty());
         trapAdapter = new TrapArrayAdapter(this,TrapList2);
         listView.setAdapter(trapAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getBaseContext(), MapActivity.class);
+                intent.putExtra("trapIntent", TrapList2.get(position));
+                startActivity(intent);
+            }
+        });
 
         /*String[] Traps = {"Trap1", "Trap2", "Trap3", "Trap4"};
 

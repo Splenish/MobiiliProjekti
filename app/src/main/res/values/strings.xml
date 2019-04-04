@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Test</string>
+    <string name="default_trap_pic_url">https://www.dropbox.com/s/vzy8kv6m4rdrm5o/no_cat.jpg?raw=1</string>
 </resources>

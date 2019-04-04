@@ -7,23 +7,45 @@
     tools:context=".MapActivity">
 
     <TextView
-        android:text="Trap 01"
+        android:textSize="25dp"
+        android:id="@+id/teksti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="40dp"
-        android:id="@+id/teksti"
+        android:text="------"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/teksti"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="5dp"
+        android:text="Triggered state"
+        android:textSize="25dp"
+        android:id="@+id/trap_state_text"
         />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/trap_state_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/map"
+        android:id="@+id/cat_pic"
+        />
+
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        app:layout_constraintTop_toBottomOf="@+id/teksti"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
         android:id="@+id/map"
-        tools:context=".MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:context=".MapsActivity" />
 
 </android.support.constraint.ConstraintLayout>

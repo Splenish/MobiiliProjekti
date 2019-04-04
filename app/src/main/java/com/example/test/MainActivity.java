@@ -28,14 +28,20 @@ public class MainActivity extends AppCompatActivity {
     String currentUser = "01";
 
     @Override
+    protected void onResume() {
+        getOwnedTraps();
+        super.onResume();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getOwnedTraps();
+
         configureToTrapList();
 
-        Log.d("SERVIISI2", "mainactivity on create");
+        //Log.d("SERVIISI2", "mainactivity on create");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("traps");
 
@@ -69,20 +75,32 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void getOwnedTraps() {
+
+        trapList.clear();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference trapRefs = database.getReference("traps");
         trapRefs.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Trap aTrap = dataSnapshot.getValue(Trap.class);
+                Log.d("MAPPIA", "datasnapshot url " + dataSnapshot.child("urlString").getValue().toString());
                 if(aTrap.getOwner().equals(currentUser)) {
                     trapList.add(aTrap);
+                    Log.d("MAPPIA", "trap added to list url: " + aTrap.getUrlString());
+                    //Log.d("PASKA", "size= " + trapList.size());
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                Trap aTrap = dataSnapshot.getValue(Trap.class);
+                Log.d("MAPPIA", "jorge bls");
+                for(int i = 0; i < trapList.size(); i++) {
+                    if(trapList.get(i).getTrapID().equals(aTrap.getTrapID())) {
+                        trapList.remove(i);
+                        trapList.add(i, aTrap);
+                    }
+                }
             }
 
             @Override
@@ -112,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TrapList.class);
                 intent.putExtra("trapListPassedToIntent", trapList);
-                Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
+                //Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
                 startActivity(intent);
             }
         });
