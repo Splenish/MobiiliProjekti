@@ -3,6 +3,8 @@ package com.example.test;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -59,6 +62,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         trapPassedFromIntent = (Trap) intent.getSerializableExtra("trapIntent");
         posString = trapPassedFromIntent.getPos();
+
+        String[] latLng = posString.split(",");
+        Geocoder geocoder = new Geocoder(this);
+
+        try{
+            Log.d("MAPPIA", "lat und long" + latLng[0] + "," + latLng[1]);
+            List<Address> matches = geocoder.getFromLocation(Double.parseDouble(latLng[0]), Double.parseDouble(latLng[1]), 1);
+            Log.d("MAPPIA", "address from reverse geocode" + matches.get(0));
+            Log.d("MAPPIA", "address from reverse geocode" + matches.get(0).getAddressLine(0));
+            TextView address = findViewById(R.id.trap_address);
+            address.setText(matches.get(0).getAddressLine(0));
+        } catch (Exception e) {
+            Log.d("MAPPIA", "Geocode error");
+            Log.e("MAPPIA", "expection", e);
+        }
+
 
         trapName.setText("Trap " + trapPassedFromIntent.getTrapID());
         if(trapPassedFromIntent.getTriggered()) {
@@ -123,6 +142,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
+
 
     public void updateMarker() {
         String[] latLng = posString.split(",");

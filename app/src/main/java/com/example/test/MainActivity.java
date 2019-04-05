@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Trap aTrap = dataSnapshot.getValue(Trap.class);
-                Log.d("MAPPIA", "datasnapshot url " + dataSnapshot.child("urlString").getValue().toString());
+                //Log.d("MAPPIA", "datasnapshot url " + dataSnapshot.child("urlString").getValue().toString());
                 if(aTrap.getOwner().equals(currentUser)) {
                     trapList.add(aTrap);
-                    Log.d("MAPPIA", "trap added to list url: " + aTrap.getUrlString());
+                    //Log.d("MAPPIA", "trap added to list url: " + aTrap.getUrlString());
                     //Log.d("PASKA", "size= " + trapList.size());
                 }
             }
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Trap aTrap = dataSnapshot.getValue(Trap.class);
-                Log.d("MAPPIA", "jorge bls");
+                //Log.d("MAPPIA", "jorge bls");
                 for(int i = 0; i < trapList.size(); i++) {
                     if(trapList.get(i).getTrapID().equals(aTrap.getTrapID())) {
                         trapList.remove(i);

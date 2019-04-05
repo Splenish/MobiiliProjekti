@@ -64,16 +64,16 @@ public class MyService extends Service {
         setTrapListener(intent);
         //Log.d("SERVIISI", "on start command");
         //currentUser = intent.getStringExtra("ownerID");
-        return START_STICKY;
+        return START_REDELIVER_INTENT;
     }
     public void notificationHandle(DataSnapshot data) {
         //Intent returnIntent = new Intent(this, MainActivity.class);
-        Log.d("MAPPIA", "data get key: " + data.getKey().toString());
+        //Log.d("MAPPIA", "data get key: " + data.getKey().toString());
         data.getRef().getParent().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Log.d("MAPPIA", "nyt ollaan jännän äärellä.");
+                //Log.d("MAPPIA", "nyt ollaan jännän äärellä.");
 
                 Trap aTrap = dataSnapshot.getValue(Trap.class);
 

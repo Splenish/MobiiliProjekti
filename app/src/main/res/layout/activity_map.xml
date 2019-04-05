@@ -28,11 +28,24 @@
         android:id="@+id/trap_state_text"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/trap_state_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/trap_address"
+        android:textSize="25dp"
+        android:text="Address"
+        android:layout_marginLeft="5dp"
+        />
+
+
+
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/trap_state_text"
+        app:layout_constraintTop_toBottomOf="@+id/trap_address"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/map"
         android:id="@+id/cat_pic"
