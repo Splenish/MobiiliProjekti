@@ -37,7 +37,7 @@
             android:name=".MyService"
             android:enabled="true"
             android:exported="true"
-            android:process=":my_process" />
+            />
 
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -44,6 +44,7 @@ public class ExtendedApplication extends Application {
 
                 if (aTrap.getOwner().equals(currentUser)) {
                     Log.d("SERVIISI2", "mennään serviceen");
+                    Log.d("SERVICETEST", "servicee menevä trap ID " + aTrap.getTrapID());
                     startServiceIntent(aTrap);
                 }
             }

@@ -66,30 +66,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-            }
-        });
-
-        Button mapButton = findViewById(R.id.map_button);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                //intent.putExtra("trapIntent", trapList.get(Integer.parseInt(currentUser)));
-
-                intent.putExtra("trapIntent", trapList.get(0));
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });
-
-        Button logButton = findViewById(R.id.to_login_button);
-        logButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
 

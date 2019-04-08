@@ -73,15 +73,20 @@ public class MyService extends Service {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                //Log.d("MAPPIA", "nyt ollaan jännän äärellä.");
+                Log.d("MAPPIA", "nyt ollaan jännän äärellä.");
 
                 Trap aTrap = dataSnapshot.getValue(Trap.class);
-
+                Log.d("SERVICETEST", "triggered trap ID " + aTrap.getTrapID());
                 Intent returnIntent = new Intent(getBaseContext(), MapActivity.class);
+                returnIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
                 returnIntent.putExtra("trapIntent", aTrap);
 
+                Log.d("MAPPIA", "urlstring of triggered trap" + aTrap.getUrlString());
+
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, returnIntent, 0);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, returnIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
 
@@ -110,6 +115,7 @@ public class MyService extends Service {
 
     public void setTrapListener(Intent passedIntent) {
         trapPassedFromIntent = (Trap) passedIntent.getSerializableExtra("passedTrap");
+        Log.d("SERVICETEST", "servicee tullee trap ID " + trapPassedFromIntent.getTrapID());
         //Log.d("SERVIISI", "gOT trap ID : " + trapPassedFromIntent.getTrapID());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference trapRefs = database.getReference("traps").child(trapPassedFromIntent.getTrapID()).child("triggered");
@@ -118,6 +124,7 @@ public class MyService extends Service {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Log.d("SERVIISI", "Specific trap triggered " + dataSnapshot.getValue());
+
                 if(dataSnapshot.getValue().toString().equals("true")) {
                     //Log.d("SERVIISI", "loukkusi " + dataSnapshot.getRef().getParent().getKey() + " on lauennut");
                     notificationHandle(dataSnapshot);
