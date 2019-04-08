@@ -20,6 +20,15 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/map_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="login"
+        android:id="@+id/to_login_button"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="to map"
         app:layout_constraintTop_toBottomOf="@id/the_button"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -57,5 +66,13 @@
         android:text="Traps"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="666dp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/to_login_button"
+        android:text="sign out"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/logout_button"
+        />
 
 </android.support.constraint.ConstraintLayout>
