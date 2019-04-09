@@ -70,6 +70,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button shoutboard_button = findViewById(R.id.shoutboard_button);
+        shoutboard_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

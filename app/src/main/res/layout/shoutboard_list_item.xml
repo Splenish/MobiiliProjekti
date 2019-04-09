@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:longClickable="true"
+    android:paddingBottom="20dp"
     >
 
     <ImageView
@@ -95,10 +96,13 @@
         />
 
     <TextView
+        android:textSize="20sp"
+        android:id="@+id/post_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/description_divider"
         android:text="Löydetty äkäinen valkoinen slobodan. Nousi seisomaan ja huusi en ole sotarikollinen ja joi syanidia."
+
         />
 
 
