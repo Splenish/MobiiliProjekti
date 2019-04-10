@@ -61,6 +61,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         Intent intent = getIntent();
 
         trapPassedFromIntent = (Trap) intent.getSerializableExtra("trapIntent");
+        Log.d("SERVICETEST", "trapPassedFromIntent ID " + trapPassedFromIntent.getTrapID());
         posString = trapPassedFromIntent.getPos();
 
         String[] latLng = posString.split(",");

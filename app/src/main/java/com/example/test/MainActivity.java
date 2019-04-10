@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Trap> trapList = new ArrayList<>();
     String currentUser = "01";
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onResume() {
@@ -59,18 +61,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button mapButton = findViewById(R.id.map_button);
-        mapButton.setOnClickListener(new View.OnClickListener() {
+        Button logoutButton = findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                //intent.putExtra("trapIntent", trapList.get(Integer.parseInt(currentUser)));
-
-                intent.putExtra("trapIntent", trapList.get(0));
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 
 
