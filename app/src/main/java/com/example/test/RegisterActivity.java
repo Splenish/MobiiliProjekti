@@ -62,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
+                    //User newUser =
                     Log.d("LOGIN", "user registration successful");
                     Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(intent);

@@ -12,14 +12,14 @@ public class Post implements Serializable {
     String message;
     String picture;
     String post_type;
-    int time_stamp;
+    long time_stamp;
     String user_id;
     int number_of_comments;
     String user_name;
     String profile_pic;
 
     public Post(int _likes, String _message, String _picture, String _post_type,
-                int _time_stamp, String _user_id, int _number_of_comments,
+                long _time_stamp, String _user_id, int _number_of_comments,
                 String _user_name, String _profile_pic) {
         this.likes = _likes;
         this.message = _message;
@@ -30,6 +30,10 @@ public class Post implements Serializable {
         this.number_of_comments = _number_of_comments;
         this.user_name = _user_name;
         this.profile_pic = _profile_pic;
+    }
+
+    public Post() {
+
     }
 
     @Exclude
@@ -103,11 +107,11 @@ public class Post implements Serializable {
         this.post_type = post_type;
     }
 
-    public int getTime_stamp() {
+    public long getTime_stamp() {
         return time_stamp;
     }
 
-    public void setTime_stamp(int time_stamp) {
+    public void setTime_stamp(long time_stamp) {
         this.time_stamp = time_stamp;
     }
 
