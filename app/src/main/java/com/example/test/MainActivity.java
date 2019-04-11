@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toolbar;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,15 +28,23 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Trap> trapList = new ArrayList<>();
     String currentUser = "01";
+    private FirebaseAuth mAuth;
+
+    @Override
+    protected void onResume() {
+        getOwnedTraps();
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getOwnedTraps();
 
-        Log.d("SERVIISI2", "mainactivity on create");
+        configureToTrapList();
+
+        //Log.d("SERVIISI2", "mainactivity on create");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("traps");
 
@@ -52,25 +61,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button logoutButton = findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         configureToTrapList();
         configureToToolbar();
         configureGuides();
     }
 
 
-    private void configureToTrapList() {
-        Button ToTrapList = (Button) findViewById(R.id.ToTrapList);
-        ToTrapList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TrapList.class);
-                intent.putExtra("trapListPassedToIntent", trapList);
-                Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
-                startActivity(intent);
-            }
-        });
-
-    }
 
     private void configureToToolbar() {
         Button ToToolbar = (Button) findViewById(R.id.ToToolbar);
@@ -95,21 +102,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getOwnedTraps() {
+
+        trapList.clear();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference trapRefs = database.getReference("traps");
         trapRefs.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Trap aTrap = dataSnapshot.getValue(Trap.class);
+                //Log.d("MAPPIA", "datasnapshot url " + dataSnapshot.child("urlString").getValue().toString());
                 if(aTrap.getOwner().equals(currentUser)) {
-                    Log.d("SERVIISI3", "trap added to list: " + aTrap.getTrapID());
                     trapList.add(aTrap);
+                    //Log.d("MAPPIA", "trap added to list url: " + aTrap.getUrlString());
+                    //Log.d("PASKA", "size= " + trapList.size());
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                Trap aTrap = dataSnapshot.getValue(Trap.class);
+                //Log.d("MAPPIA", "jorge bls");
+                for(int i = 0; i < trapList.size(); i++) {
+                    if(trapList.get(i).getTrapID().equals(aTrap.getTrapID())) {
+                        trapList.remove(i);
+                        trapList.add(i, aTrap);
+                    }
+                }
             }
 
             @Override
@@ -129,5 +147,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+    private void configureToTrapList() {
+        Button ToTrapList = (Button) findViewById(R.id.ToTrapList);
+        ToTrapList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TrapList.class);
+                intent.putExtra("trapListPassedToIntent", trapList);
+                //Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
+                startActivity(intent);
+            }
+        });
+
+    }
 
 }

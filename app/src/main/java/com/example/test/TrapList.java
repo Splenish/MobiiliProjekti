@@ -13,22 +13,36 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class TrapList extends Nav_MainToolbar {
+public class TrapList extends AppCompatActivity {
+
+
+    private ListView listView;
+    private TrapArrayAdapter trapAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trap_list);
 
-        ListView listView = (ListView) findViewById(R.id.TrapList);
+        listView = (ListView) findViewById(R.id.TrapList);
 
 
         //Intent intent = getIntent();
-        ArrayList<Trap> TrapList2 = (ArrayList<Trap>) getIntent().getSerializableExtra("trapListPassedToIntent");
+
+        final ArrayList<Trap> TrapList2 = (ArrayList<Trap>) getIntent().getSerializableExtra("trapListPassedToIntent");
         //Log.d("SERVIISI3","Intentistä saatu list size: " + TrapList2.size());
-        //Log.d("SERVIISI3","Shit: " + TrapList2.isEmpty());
-        TrapArrayAdapter trapAdapter = new TrapArrayAdapter(this, TrapList2);
+        //Log.d("SERVIISI3","Paskaa: " + TrapList2.isEmpty());
+        trapAdapter = new TrapArrayAdapter(this,TrapList2);
+
         listView.setAdapter(trapAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getBaseContext(), MapActivity.class);
+                intent.putExtra("trapIntent", TrapList2.get(position));
+                startActivity(intent);
+            }
+        });
 
     }
 

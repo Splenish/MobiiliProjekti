@@ -61,12 +61,12 @@ public class Trap implements Serializable{
         return triggered;
     }
 
-    public Trap(String _owner, String _pos, boolean _triggered, String _trapID, String urlString_) {
+    public Trap(String _owner, String _pos, boolean _triggered, String _trapID, String _urlString) {
         this.owner = _owner;
         this.pos = _pos;
         this.triggered = _triggered;
         this.trapID = _trapID;
-        this.urlString = urlString_;
+        this.urlString = _urlString;
     }
 
     @Exclude
