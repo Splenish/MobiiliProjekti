@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toolbar;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
@@ -52,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         configureToTrapList();
+        configureToToolbar();
+        configureGuides();
     }
-
-
 
 
     private void configureToTrapList() {
@@ -69,6 +70,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void configureToToolbar() {
+        Button ToToolbar = (Button) findViewById(R.id.ToToolbar);
+        ToToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Nav_MainToolbar.class);
+                startActivity(intent);
+            }
+        });
+    }
+    private void configureGuides() {
+        Button Guides = (Button) findViewById(R.id.Guides);
+        Guides.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("PASKETTI", "ennen intent on click");
+                Intent intent = new Intent(MainActivity.this, GuideList.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void getOwnedTraps() {

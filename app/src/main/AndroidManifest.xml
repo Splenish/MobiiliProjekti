@@ -10,13 +10,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".GuideList"/>
+        <activity
+            android:name=".Nav_MainToolbar"
+            android:label="@string/title_activity_nav__main_toolbar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TrapDetails" />
 
-        <activity android:name=".TrapDetails"></activity>
         <service
             android:name=".MyService"
-            android:process=":my_process"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"
+            android:process=":my_process" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -25,7 +30,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TrapList" />
+        <activity
+            android:name=".TrapList"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

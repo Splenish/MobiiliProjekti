@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TrapDetails">
-    <TextView
+    tools:context=".GuideList">
+
+    <ListView
+        android:paddingTop="75dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/notlikethis"
-        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="You're Gay now, faggot."
-        android:textColor="#000"
-        android:textSize="25dp" />
+        android:id="@+id/GuideList" />
 
 </android.support.constraint.ConstraintLayout>
