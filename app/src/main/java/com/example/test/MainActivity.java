@@ -1,6 +1,7 @@
 package com.example.test;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                SharedPrefsHelper helper = new SharedPrefsHelper();
+                helper.clearUserFromPrefs(getBaseContext());
                 Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                 startActivity(intent);
             }
@@ -79,6 +82,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+        String name = prefs.getString("name", null);
+        String profile_pic = prefs.getString("profile_pic", null);
+        String email = prefs.getString("email", null);
+
+        Log.d("SHOUTBOARD", "name: " + name);
+        Log.d("SHOUTBOARD", "pic: " + profile_pic);
+        Log.d("SHOUTBOARD", "email: " + email);
+
     }
 
 
