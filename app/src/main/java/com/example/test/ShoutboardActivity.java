@@ -1,12 +1,16 @@
 package com.example.test;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -15,10 +19,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import static android.view.View.GONE;
 
 public class ShoutboardActivity extends AppCompatActivity {
 
-    private ListView listView;
+    ListView listView;
     private PostArrayAdapter postAdapter;
     ArrayList<Post> postList = new ArrayList<>();
 
@@ -28,7 +35,6 @@ public class ShoutboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shoutboard);
 
         listView = findViewById(R.id.post_list);
-
 
         /*
         Post post1 = new Post(2, "Haista paska", "https://i0.wp.com/roomescapeartist.com/wp-content/uploads/2016/05/foolish-cat-wallpaper.jpg?resize=500%2C380&ssl=1",
@@ -40,8 +46,29 @@ public class ShoutboardActivity extends AppCompatActivity {
         */
         postAdapter = new PostArrayAdapter(this, postList);
         listView.setAdapter(postAdapter);
+        /*
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("bugat", "view " + view.toString());
+                return false;
+            }
+        });*/
+
 
         getShoutboardItems();
+
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), NewPostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
     }
 
@@ -52,13 +79,21 @@ public class ShoutboardActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Post aPost = dataSnapshot.getValue(Post.class);
-                postList.add(aPost);
+                postList.add(0, aPost);
                 postAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                Post aPost = dataSnapshot.getValue(Post.class);
+                for(int i = 0; i < postList.size(); i++) {
+                    if(postList.get(i).getId() == aPost.getId()) {
+                        postList.remove(i);
+                        postList.add(i, aPost);
+                        break;
+                    }
+                }
+                postAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -77,13 +112,7 @@ public class ShoutboardActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
 
     }
 }

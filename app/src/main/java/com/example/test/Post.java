@@ -17,10 +17,11 @@ public class Post implements Serializable {
     int number_of_comments;
     String user_name;
     String profile_pic;
+    String id;
 
     public Post(int _likes, String _message, String _picture, String _post_type,
                 long _time_stamp, String _user_id, int _number_of_comments,
-                String _user_name, String _profile_pic) {
+                String _user_name, String _profile_pic, String _id) {
         this.likes = _likes;
         this.message = _message;
         this.picture = _picture;
@@ -30,6 +31,7 @@ public class Post implements Serializable {
         this.number_of_comments = _number_of_comments;
         this.user_name = _user_name;
         this.profile_pic = _profile_pic;
+        this.id = _id;
     }
 
     public Post() {
@@ -48,6 +50,7 @@ public class Post implements Serializable {
         result.put("number_of_comments", number_of_comments);
         result.put("user_name", user_name);
         result.put("profile_pic", profile_pic);
+        result.put("id", id);
         return result;
     }
 
@@ -123,5 +126,11 @@ public class Post implements Serializable {
         this.user_id = user_id;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }
