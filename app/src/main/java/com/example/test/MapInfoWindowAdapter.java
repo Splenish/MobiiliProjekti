@@ -43,8 +43,6 @@ public class MapInfoWindowAdapter extends MainMapActivity implements GoogleMap.I
 
     @Override
     public View getInfoContents(Marker marker) {
-        //openInfoWindow(marker,infoWindow);
-        //return infoWindow;
         return null;
     }
 
@@ -52,6 +50,5 @@ public class MapInfoWindowAdapter extends MainMapActivity implements GoogleMap.I
     public View getInfoWindow(Marker marker) {
         openInfoWindow(marker,infoWindow);
         return infoWindow;
-        //return null;
     }
 }
