@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,10 +79,13 @@ public class MainActivity extends AppCompatActivity {
                 for(Trap trap :trapList){
                     Log.d("trapPosTest",trap.getPos());
                 }
-                if(trapList != null) {
+                if(trapList.size() != 0) {
                     Intent intentMap = new Intent(getBaseContext(), MainMapActivity.class);
                     intentMap.putExtra("trapListPassedToMapIntent", trapList);
                     startActivity(intentMap);
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Initializing traplist", Toast.LENGTH_SHORT).show();
                 }
             }
         });

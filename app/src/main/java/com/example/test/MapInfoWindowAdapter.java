@@ -20,6 +20,7 @@ public class MapInfoWindowAdapter extends MainMapActivity implements GoogleMap.I
     private final View infoWindow;
     private Context infoContext;
     Trap trap;
+    ImageView imageView;
 
     public MapInfoWindowAdapter(Context context, Trap sentTrap){
         trap = sentTrap;
@@ -29,15 +30,12 @@ public class MapInfoWindowAdapter extends MainMapActivity implements GoogleMap.I
 
     private void openInfoWindow(Marker marker, View view){
         String title = marker.getTitle();
-        ImageView imageView = view.findViewById(R.id.image_info_window);
-
+        imageView = view.findViewById(R.id.image_info_window);
         if(!title.equals("Stray cat!")){
             imageView.setVisibility(View.VISIBLE);
             Picasso.get().load(trap.getUrlString()).into(imageView);
         }
-        else{
-            imageView.setVisibility(View.GONE);
-        }
+        else{ imageView.setVisibility(View.GONE); }
 
         TextView textView = view.findViewById(R.id.text_info_window);
         textView.setText(title);
@@ -45,12 +43,15 @@ public class MapInfoWindowAdapter extends MainMapActivity implements GoogleMap.I
 
     @Override
     public View getInfoContents(Marker marker) {
-        openInfoWindow(marker,infoWindow);
-        return infoWindow;
+        //openInfoWindow(marker,infoWindow);
+        //return infoWindow;
+        return null;
     }
 
     @Override
     public View getInfoWindow(Marker marker) {
-        return null;
+        openInfoWindow(marker,infoWindow);
+        return infoWindow;
+        //return null;
     }
 }

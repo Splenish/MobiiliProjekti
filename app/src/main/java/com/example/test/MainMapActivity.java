@@ -33,6 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,6 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
 
     private GoogleMap mainMap;
     private ArrayList<Trap> TrapList;
-    //private ArrayList<Sighting> SightingList;
     Trap trapToSend;
 
     @Override
@@ -50,8 +50,6 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
         Log.d("viesti","mapin oncreatessa");
 
         TrapList = (ArrayList<Trap>) getIntent().getSerializableExtra("trapListPassedToMapIntent");
-        //SightingList = new ArrayList<>();
-
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_main);
         mapFragment.getMapAsync(this);
@@ -76,10 +74,6 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
         return returnedBitmap;
     }
 
-    public void removeSighting(){
-
-    }
-
     public void getSightings(){
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference sightingReference = firebaseDatabase.getReference("sightings");
@@ -93,8 +87,8 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
                     String[] latLngStrings = aSighting.getPosition().split(",");
                     LatLng latLng = new LatLng(Double.parseDouble(latLngStrings[0]), Double.parseDouble(latLngStrings[1]));
                     Log.d("viesti", latLngStrings[0] + "," + latLngStrings[1]);
-                    mainMap.addMarker(new MarkerOptions().position(latLng).title("Stray cat!").icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.like_icon))));
-                    mainMap.addCircle(new CircleOptions().center(latLng).radius(1000).strokeColor(Color.BLUE).fillColor(0x220000FF).strokeWidth(3));
+                    mainMap.addMarker(new MarkerOptions().position(latLng).title("Stray cat!").icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.cat_marker))));
+                    mainMap.addCircle(new CircleOptions().center(latLng).radius(500).strokeColor(0x99A171AD).fillColor(0x22A171AD).strokeWidth(3));
                 }
             }
 
@@ -117,6 +111,7 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
         mainMap = googleMap;
         final ArrayList<Marker> markerList = new ArrayList<>();
         getSightings();
+        mainMap.getUiSettings().setMapToolbarEnabled(false);
 
         for(Trap trap : TrapList){
             String[] latLngStrings = trap.getPos().split(",");
@@ -138,8 +133,8 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
         mainMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng position) {
-                mainMap.addMarker(new MarkerOptions().position(position).title("Stray cat!"));
-                mainMap.addCircle(new CircleOptions().center(position).radius(1000).strokeColor(Color.BLUE).fillColor(0x220000FF).strokeWidth(3));
+                mainMap.addMarker(new MarkerOptions().position(position).title("Stray cat!").icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.cat_marker))));
+                mainMap.addCircle(new CircleOptions().center(position).radius(500).strokeColor(0x99A171AD).fillColor(0x22A171AD).strokeWidth(3));
                 mainMap.moveCamera(CameraUpdateFactory.newLatLng(position));
                 mainMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
@@ -167,8 +162,8 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
                 MapInfoWindowAdapter infoAdapter = new MapInfoWindowAdapter(MainMapActivity.this,trapToSend);
                 mainMap.setInfoWindowAdapter(infoAdapter);
 
-                mainMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-                mainMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                float zoom = 15;
+                mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(),zoom));
                 return false;
             }
         });

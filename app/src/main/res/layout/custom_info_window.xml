@@ -3,11 +3,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/colorPrimary"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
 
     <ImageView
         android:id="@+id/image_info_window"
-        android:layout_width="200dp"
+        android:layout_width="170dp"
         android:layout_height="100dp"
         android:src="@drawable/coolcat"/>
 
@@ -16,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Click for more"
+        android:textColor="@android:color/white"
         android:gravity="right"
         android:textSize="20dp"/>
 
