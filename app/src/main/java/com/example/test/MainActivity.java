@@ -70,6 +70,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button buttonMainMap = findViewById(R.id.button_main_map);
+        buttonMainMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(Trap trap :trapList){
+                    Log.d("trapPosTest",trap.getPos());
+                }
+                if(trapList != null) {
+                    Intent intentMap = new Intent(getBaseContext(), MainMapActivity.class);
+                    intentMap.putExtra("trapListPassedToMapIntent", trapList);
+                    startActivity(intentMap);
+                }
+            }
+        });
     }
 
 
