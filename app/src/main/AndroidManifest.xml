@@ -19,7 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/CatCube">
         >
-        <activity android:name=".Bottom_Nav_Bar"></activity>
         <activity android:name=".Guide_Activity6" />
         <activity android:name=".Guide_Activity5" />
         <activity android:name=".Guide_Activity4" />

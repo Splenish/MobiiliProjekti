@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/Bottom_Navigation"
         app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/ToTrapList"
         android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nav Menu"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/Bottom_Navigation"
         app:layout_constraintLeft_toRightOf="@id/Guides" />
 
     <Button
@@ -73,7 +73,7 @@
         android:text="Fucking Miracles"
         tools:layout_editor_absoluteX="88dp"
         tools:layout_editor_absoluteY="683dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/Bottom_Navigation"
         app:layout_constraintLeft_toRightOf="@id/ToTrapList"/>
 
     <Button
@@ -84,6 +84,15 @@
         android:text="shoutboard"
         android:id="@+id/shoutboard_button"
         />
+
+    <android.support.design.widget.BottomNavigationView
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/Bottom_Navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_nav">
+
+    </android.support.design.widget.BottomNavigationView>
 
 
 </android.support.constraint.ConstraintLayout>

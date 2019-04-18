@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Home"
+        android:id="@+id/Bottom_Home"
+        android:icon="@drawable/ainsley" />
+    <item android:title="Traps"
+        android:id="@+id/Bottom_Traps"
+        android:icon="@drawable/ainsley" />
+    <item android:title="Post"
+        android:id="@+id/Bottom_Post"
+        android:icon="@drawable/ic_menu_send" />
+    <item android:title="Pepperoni"
+        android:id="@+id/Bottom_Pepperoni"
+        android:icon="@drawable/ainsley" />
+    <item android:title="Secret"
+        android:id="@+id/Bottom_Secret"
+        android:icon="@drawable/ainsley" />
+</menu>
