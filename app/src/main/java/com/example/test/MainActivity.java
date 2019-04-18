@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Trap> trapList = new ArrayList<>();
-    String currentUser = "01";
+    String currentUser;
     private FirebaseAuth mAuth;
 
     @Override
@@ -43,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+        String name = prefs.getString("name", null);
+        String profile_pic = prefs.getString("profile_pic", null);
+        String email = prefs.getString("email", null);
+        currentUser = prefs.getString("uId", null);
+
+        Log.d("SHOUTBOARD", "name: " + name);
+        Log.d("SHOUTBOARD", "pic: " + profile_pic);
+        Log.d("SHOUTBOARD", "email: " + email);
+        Log.d("SHOUTBOARD", "currentser: " + currentUser);
 
         configureToTrapList();
 
@@ -90,14 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
-        String name = prefs.getString("name", null);
-        String profile_pic = prefs.getString("profile_pic", null);
-        String email = prefs.getString("email", null);
 
-        Log.d("SHOUTBOARD", "name: " + name);
-        Log.d("SHOUTBOARD", "pic: " + profile_pic);
-        Log.d("SHOUTBOARD", "email: " + email);
 
     }
 
@@ -135,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 Trap aTrap = dataSnapshot.getValue(Trap.class);
                 //Log.d("MAPPIA", "datasnapshot url " + dataSnapshot.child("urlString").getValue().toString());
                 if(aTrap.getOwner().equals(currentUser)) {
+                    Log.d("TURPAAN", "trappia perseese: " + aTrap.getTrapID());
                     trapList.add(aTrap);
                     //Log.d("MAPPIA", "trap added to list url: " + aTrap.getUrlString());
                     //Log.d("PASKA", "size= " + trapList.size());

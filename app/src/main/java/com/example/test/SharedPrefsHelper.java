@@ -12,7 +12,7 @@ public class SharedPrefsHelper {
         editor.putString("name", name);
         editor.putString("profile_pic", profile_pic);
         editor.putString("email", email);
-        editor.putString("uId", email);
+        editor.putString("uId", uId);
         editor.apply();
     }
 
