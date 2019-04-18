@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.firebase.FirebaseApp;
@@ -31,7 +34,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Trap> trapList = new ArrayList<>();
-    String currentUser = "01";
+    String currentUser;
     private FirebaseAuth mAuth;
 
     @Override
@@ -45,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+        String name = prefs.getString("name", null);
+        String profile_pic = prefs.getString("profile_pic", null);
+        String email = prefs.getString("email", null);
+        currentUser = prefs.getString("uId", null);
+
+        Log.d("SHOUTBOARD", "name: " + name);
+        Log.d("SHOUTBOARD", "pic: " + profile_pic);
+        Log.d("SHOUTBOARD", "email: " + email);
+        Log.d("SHOUTBOARD", "currentser: " + currentUser);
 
         configureToTrapList();
 
@@ -78,6 +91,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button buttonMainMap = findViewById(R.id.button_main_map);
+        buttonMainMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(Trap trap :trapList){
+                    Log.d("trapPosTest",trap.getPos());
+                }
+                if(trapList.size() != 0) {
+                    Intent intentMap = new Intent(getBaseContext(), MainMapActivity.class);
+                    intentMap.putExtra("trapListPassedToMapIntent", trapList);
+                    startActivity(intentMap);
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Initializing traplist", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         configureToTrapList();
         configureToToolbar();
@@ -92,14 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
-        String name = prefs.getString("name", null);
-        String profile_pic = prefs.getString("profile_pic", null);
-        String email = prefs.getString("email", null);
-
-        Log.d("SHOUTBOARD", "name: " + name);
-        Log.d("SHOUTBOARD", "pic: " + profile_pic);
-        Log.d("SHOUTBOARD", "email: " + email);
 
         BottomNavigationView bottomvan = findViewById(R.id.Bottom_Navigation);
         bottomvan.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -162,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 Trap aTrap = dataSnapshot.getValue(Trap.class);
                 //Log.d("MAPPIA", "datasnapshot url " + dataSnapshot.child("urlString").getValue().toString());
                 if(aTrap.getOwner().equals(currentUser)) {
+                    Log.d("TURPAAN", "trappia perseese: " + aTrap.getTrapID());
                     trapList.add(aTrap);
                     //Log.d("MAPPIA", "trap added to list url: " + aTrap.getUrlString());
                     //Log.d("PASKA", "size= " + trapList.size());

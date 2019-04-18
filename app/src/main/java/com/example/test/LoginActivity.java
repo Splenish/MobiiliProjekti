@@ -88,6 +88,12 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPrefsHelper helper = new SharedPrefsHelper();
                             helper.userToPrefs(getBaseContext(), currentUser.getName(), currentUser.getProfile_pic(),
                                     currentUser.getEmail(), mAuth.getCurrentUser().getUid());
+
+                            Log.d("SHOUTBOARD", mAuth.getCurrentUser().getUid());
+
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            startActivity(intent);
                         }
 
                         @Override
@@ -96,9 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
+
                 } else {
                     Log.w("LOGIN", "signInWithEmail:failure", task.getException());
                     Toast.makeText(LoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
