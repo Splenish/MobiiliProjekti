@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Guide_Activity1">
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        app:srcCompat="@drawable/lily_1080_480"
+        tools:layout_editor_absoluteX="-5dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="420dp">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:paddingLeft="10dp"
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loukuttamisen toimintaohjeet"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="217dp"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+
+                android:padding="10dp"
+                android:id="@+id/textViewContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pääosin loukutettavat kissat ovat ulos päässeitä arkoja lemmikkikissoja, jotka ovat karkureissulla tai villiintyneitä kissoja. Loukutukseen käytetään pääasiassa elävänä pyytäviä supiloukkuja, vaneriloukkuja ja minkkiloukkuja.  Loukku sijoitetaan sellaiselle alueelle, missä on hyvin vähän liikennettä ja loukun on oltava piilossa ulkopuolisilta katseilta. Piiloon sijoitetun loukun sijaintipaikkaa ei kannata ilmoittaa julkisesti, vaan pelkästään luotettaville tahoille. Loukun sijoittamiselle pitää kysyä aina lupa maanomistajalta. Kerrostaloalueella lupaa voi kysyä isännöitsijältä. Lisäksi loukkuun on hyvä kirjoittaa lappu, missä lukee loukuttamisen syy ja puhelinnumero, jos joku sattuu sen jostain syystä löytämään. \n\n
+Loukkuun ja lähialueelle asetetaan tuoksuvaa ruokaa, että eläin jää määrätylle alueelle syömään. Loukkua kannattaa käydä tarkistamassa tasaisin väliajoin, mutta siellä ei kannata ravata kuitenkaan liian usein, koska eläin voi alkaa välttelemään aluetta. Loukun vahdiksi voi hankkia myös The Cube älylaitteen, joka ilmoittaa CatCube sovellukseen, kun karkuri on loukussa."
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="264dp" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

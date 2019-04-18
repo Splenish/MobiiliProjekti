@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class TrapList extends AppCompatActivity {
 
+
     private ListView listView;
     private TrapArrayAdapter trapAdapter;
 
@@ -27,10 +28,12 @@ public class TrapList extends AppCompatActivity {
 
 
         //Intent intent = getIntent();
+
         final ArrayList<Trap> TrapList2 = (ArrayList<Trap>) getIntent().getSerializableExtra("trapListPassedToIntent");
         //Log.d("SERVIISI3","Intentistä saatu list size: " + TrapList2.size());
         //Log.d("SERVIISI3","Paskaa: " + TrapList2.isEmpty());
         trapAdapter = new TrapArrayAdapter(this,TrapList2);
+
         listView.setAdapter(trapAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -40,23 +43,6 @@ public class TrapList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        /*String[] Traps = {"Trap1", "Trap2", "Trap3", "Trap4"};
-
-        ListAdapter TrapListAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,Traps);
-
-        ListView TrapList = (ListView) findViewById(R.id.TrapList);
-
-        TrapList.setAdapter(TrapListAdapter);
-        TrapList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-                Intent appInfo = new Intent(TrapList.this, TrapDetails.class);
-                startActivity(appInfo);
-            }
-        });*/
-
 
     }
 

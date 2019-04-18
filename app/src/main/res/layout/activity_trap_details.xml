@@ -5,14 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TrapDetails">
-    <TextView
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/notlikethis"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="You're Gay no, faggot."
-        android:textColor="#000"
-        android:textSize="25dp" />
 
 </android.support.constraint.ConstraintLayout>

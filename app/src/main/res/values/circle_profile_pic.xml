@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="circle_profile_pic">
+
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_marginTop">9dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:src">@drawable/ainsley</item>
+    </style>
+
+</resources>

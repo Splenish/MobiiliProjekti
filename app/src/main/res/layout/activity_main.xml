@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.example.test.MainActivity">
 
     <Button
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="'Sup Fucko!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -64,5 +64,33 @@
         android:text="Main map"
         app:layout_constraintTop_toBottomOf="@+id/logout_button"
         app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <Button
+        android:id="@+id/ToToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nav Menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/Guides" />
+
+    <Button
+        android:id="@+id/Guides"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fucking Miracles"
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="683dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/ToTrapList"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/logout_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="shoutboard"
+        android:id="@+id/shoutboard_button"
+        />
+
 
 </android.support.constraint.ConstraintLayout>

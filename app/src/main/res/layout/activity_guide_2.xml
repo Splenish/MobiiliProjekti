@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Guide_Activity2">
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        app:srcCompat="@drawable/lily2_1080_480"
+        tools:layout_editor_absoluteX="-5dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="420dp">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:paddingLeft="10dp"
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loukun viritysohjeet"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+
+                android:padding="10dp"
+                android:id="@+id/textViewContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1.	Loukku asetetaan maahan tasaiselle kohdalle. Paikka pitää olla aina ulkopuolisilta piilossa, kuten sijoitettuna pensaan juureen, puun alle, ulkorakennukseen tai muuhun suojaisampaan paikkaan. \n\n
+2.	Kun loukutetaan villiintynyttä kissaa, loukku kannattaa peitellä havun oksilla ja sen sellaisella mitä lähettyviltä löytyy. Kadonneen lemmikkikissan ollessa kyseessä, loukun voi peittää esimerkiksi tutulta tuoksuvalla peitolla. \n\n
+3.	Loukun takaosassa on luukku, josta ruoka laitetaan sille tarkoitetun tason päälle. Voimakkaasti tuoksuva ruoka on paras houkutin eläimelle. Koko purkkia ei tarvitse käyttää kerralla. Luukku on suljettava huolellisesti ruuan laittamisen jälkeen. \n\n
+4.	Luukun etuosan ovi viritetään auki. Oven alaosassa molemmin puolin on ”klipsut”, jotka painetaan sivuun samalla, kun ovi nostetaan ylös. \n\n
+5.	Loukun päällä on metallinen tikku, joka oven ollessa auki, vedetään siinä olevan silmukan läpi. Tämä pitää oven auki ja virittää samalla loukun. \n\n
+6.	Loukun takaosassa on kohollaan oleva verkko-osa, jota sanotaan astinlaudaksi. Sen alle ei kannata sijoittaa mitään, koska se estää loukun laukeamisen. Kissan mennessä loukkuun ja osuessaan astinlautaan, loukun ovi menee kiinni.
+"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

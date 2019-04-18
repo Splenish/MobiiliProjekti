@@ -6,16 +6,39 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ExtendedApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Cat Cube"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/CatCube"
+        >
         <activity android:name=".MainMapActivity"></activity>
+        <activity android:name=".Bottom_Nav_Bar"></activity>
+        <activity android:name=".Guide_Activity6" />
+        <activity android:name=".Guide_Activity5" />
+        <activity android:name=".Guide_Activity4" />
+        <activity android:name=".Guide_Activity3" />
+        <activity android:name=".Guide_Activity2" />
+        <activity android:name=".Guide_Activity1" />
+        <activity
+            android:name=".GuideList"
+            android:label="Guide Mista"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Nav_MainToolbar"
+            android:label="paska"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".PostCommentsActivity"></activity>
+        <activity android:name=".NewPostActivity" />
+        <activity android:name=".ShoutboardActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
 
@@ -46,7 +69,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TrapList" />
+        <activity
+            android:name=".TrapList"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

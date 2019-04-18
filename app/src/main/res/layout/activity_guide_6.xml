@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Guide_Activity6">
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        app:srcCompat="@drawable/lily6_1080_480"
+        tools:layout_editor_absoluteX="-5dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="420dp">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:paddingLeft="10dp"
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Villiintynyt kissa vai kesy lemmikki?"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="217dp"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+
+                android:padding="10dp"
+                android:id="@+id/textViewContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Luontoon hylätty tai siellä syntynyt kissa voi villiintyä osittain eli muuttua epäluuloiseksi ihmistä kohtaan. Se ei kuitenkaan tarkoita sitä, että kissaa ei saisi kesytettyä. Oikeanlaisen kärsivällisyyden ja vuorovaikutuksen sekä rutiinien avulla arka kissa voi alkaa uudelleen luottamaan ihmiseen. Valtaosa villiintyneitä kissoista kesyyntyy huomattavasti, kun ne pääsevät rauhalliseen ja turvalliseen ympäristöön.
+Joka vuosi eläinsuojeluyhdistykset etsivät auttavia käsiä eli vapaaehtoisia, jotka voisivat tarjota löytökissoille väliaikaisesti kodin kaltaisen ympäristön. Kun kissa huomaa, että ihmisestä ei ole sille vaaraa, se rentoutuu ja tottuu uuteen elinympäristöön. Aikaa kesyyntymiseen voi kulua viikoista kuukausiin tai jopa vuosiin. Ihan kaikki kissat eivät kesyynny sellaisella takuulla, että ne nauttisivat yltiöpäisistä hellyydenosoituksista. Täytyy kuitenkin muistaa se, että on olemassa myös ikänsä ihmisten kanssa asuneita kissoja, jotka eivät myöskään pidä liiallisista hellyydenosoituksista ja elävät nekin aika itsenäisesti.
+"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="264dp" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

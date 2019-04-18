@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Guide_Activity5">
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        app:srcCompat="@drawable/lily5_1080_480"
+        tools:layout_editor_absoluteX="-5dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="420dp">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:paddingLeft="10dp"
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Talteenotetut eläimet"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="217dp"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+
+                android:padding="10dp"
+                android:id="@+id/textViewContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kun karkuri tai koditon eläin on saatu kiinni, on tärkeä ilmoittaa siitä paikalliselle löytöeläinsuojalle ja/tai eläinsuojeluyhdistykselle. Monesti voi myös itse julkaista kuvan esimerkiksi paikallisessa puskaradiossa tai karkurit.fi sivustolla. Kyseiset tahot huolehtivat, että eläimeltä tarkistetaan siru ja siitä ilmoitetaan internetissä tai kauppojen ilmoitustauluilla, että mahdollinen omistaja löytyisi. Mikäli kyseiselle eläimelle ei omistajaa ilmoituksista huolimatta löydy, se voidaan myydä eteenpäin 15 vuorokauden jälkeen. Tietyissä tilanteissa eläin saatetaan myös lopettaa, jos löytöeläinsuojalla tai eläinsuojeluyhdistyksellä ei ole riittävästi resursseja ylläpitää eläintä tai sen eläinlääkärikulut nousevat kalliiksi ja se ei ole adoptoitavassa kunnossa."
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="264dp" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
