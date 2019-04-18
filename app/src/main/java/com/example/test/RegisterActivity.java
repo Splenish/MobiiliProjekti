@@ -79,7 +79,8 @@ public class RegisterActivity extends AppCompatActivity {
                     editor.apply();*/
 
                     SharedPrefsHelper helper = new SharedPrefsHelper();
-                    helper.userToPrefs(getBaseContext(), newUser.getName(), newUser.getProfile_pic(), newUser.getEmail());
+                    helper.userToPrefs(getBaseContext(), newUser.getName(), newUser.getProfile_pic(), newUser.getEmail(),
+                            FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                     FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance()
                             .getCurrentUser().getUid()).setValue(newUser);

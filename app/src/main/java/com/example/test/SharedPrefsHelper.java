@@ -7,11 +7,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SharedPrefsHelper {
 
-    public void userToPrefs(Context context, String name, String profile_pic, String email) {
+    public void userToPrefs(Context context, String name, String profile_pic, String email, String uId) {
         SharedPreferences.Editor editor = context.getSharedPreferences("user", MODE_PRIVATE).edit();
         editor.putString("name", name);
         editor.putString("profile_pic", profile_pic);
         editor.putString("email", email);
+        editor.putString("uId", email);
         editor.apply();
     }
 
@@ -20,5 +21,6 @@ public class SharedPrefsHelper {
         preferences.edit().remove("name").apply();
         preferences.edit().remove("email").apply();
         preferences.edit().remove("profile_pic").apply();
+        preferences.edit().remove("uId").apply();
     }
 }

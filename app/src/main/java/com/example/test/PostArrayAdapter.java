@@ -1,6 +1,7 @@
 package com.example.test;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -70,7 +71,10 @@ public class PostArrayAdapter extends ArrayAdapter<Post> {
         number_of_comments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log.d("bugat", "komment klik");
+                Log.d("bugat", "komment klik");
+                Intent intent = new Intent(postContext, PostCommentsActivity.class);
+                intent.putExtra("passedPost", currentPost);
+                postContext.startActivity(intent);
             }
         });
 

@@ -86,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                             editor.apply();*/
                             Log.d("SHOUTBOARD", "tungetaan shittii prefsii");
                             SharedPrefsHelper helper = new SharedPrefsHelper();
-                            helper.userToPrefs(getBaseContext(), currentUser.getName(), currentUser.getProfile_pic(), currentUser.getEmail());
+                            helper.userToPrefs(getBaseContext(), currentUser.getName(), currentUser.getProfile_pic(),
+                                    currentUser.getEmail(), mAuth.getCurrentUser().getUid());
                         }
 
                         @Override
