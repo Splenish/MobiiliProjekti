@@ -71,6 +71,7 @@ public class PostCommentsActivity extends AppCompatActivity {
                 myRef.setValue(newComment).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        FirebaseDatabase.getInstance().getReference("shoutboard").child("posts").child(aPost.getId()).child("number_of_comments").setValue(aPost.getNumber_of_comments() + 1);
                     }
                 });
 
