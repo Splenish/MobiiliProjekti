@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         Guides.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("PASKETTI", "ennen intent on click");
                 Intent intent = new Intent(MainActivity.this, GuideList.class);
                 startActivity(intent);
             }

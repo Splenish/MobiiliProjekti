@@ -9,20 +9,20 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Your gay" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_Main"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Main Act" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_Trap"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Trap List" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_Guide"
             android:icon="@drawable/ic_menu_manage"
             android:title="Guides" />
     </group>
 
-    <item android:title="Cummunicate">
+    <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Guide_Activity3">
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        app:srcCompat="@drawable/lily3_1080_480_"
+        tools:layout_editor_absoluteX="-5dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@+id/Banner"
+        android:layout_width="match_parent"
+        android:layout_height="420dp">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:paddingLeft="10dp"
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tutustu The Cube-älylaitteeseen"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="217dp"
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+
+                android:padding="10dp"
+                android:id="@+id/textViewContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="The Cube on loukkuun kiinnitettävä laite, joka helpottaa loukun vahtimista. Laitteen voi kiinnittää lähes kaikkiin itsestään laukeaviin loukkuihin, mutta sitä ei ole tarkoitettu metsästyskäyttöön. Sen ansiosta sinun ei tarvitse käydä tarkistamassa loukkua tasaisin väliajoin, koska laite ilmoittaa milloin karkuri on jäänyt kiinni. Laite on yhdistettynä CatCube sovellukseen ja kertoo loukun tarkan sijainnin. Eläimen mennessä loukkuun, laite lähettää kuvan CatCube sovellukseen, kun loukku on lauennut. Yksi tai useampi henkilö saa loukutuksen statuksesta tiedon, jos karkurin kiinnisaamista seuraa useampi henkilö CatCube sovelluksen kautta. "
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="264dp" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

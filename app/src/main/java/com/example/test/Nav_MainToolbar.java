@@ -53,9 +53,6 @@ public class Nav_MainToolbar extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -69,20 +66,17 @@ public class Nav_MainToolbar extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_Main) {
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
-            Intent intent = new Intent( getBaseContext(), TrapList.class);
-            startActivity(intent);
+        } else if (id == R.id.nav_Trap) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_Guide) {
             Intent intent = new Intent( getBaseContext(), GuideList.class);
             startActivity(intent);
 
