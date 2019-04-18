@@ -23,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -41,6 +42,7 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
 
     private GoogleMap mainMap;
     private ArrayList<Trap> TrapList;
+    private ArrayList<Circle> CircleList;
     Trap trapToSend;
 
     @Override
@@ -50,6 +52,7 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
         Log.d("viesti","mapin oncreatessa");
 
         TrapList = (ArrayList<Trap>) getIntent().getSerializableExtra("trapListPassedToMapIntent");
+        CircleList = new ArrayList<>();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_main);
         mapFragment.getMapAsync(this);
@@ -125,7 +128,7 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
             builder.include(marker.getPosition());
         }
         LatLngBounds bounds = builder.build();
-        int padding = 100;
+        final int padding = 100;
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         googleMap.moveCamera(cu);
         googleMap.animateCamera(cu);
@@ -159,11 +162,10 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
                         break;
                     } else{ position++; }
                 }
-                MapInfoWindowAdapter infoAdapter = new MapInfoWindowAdapter(MainMapActivity.this,trapToSend);
-                mainMap.setInfoWindowAdapter(infoAdapter);
 
-                float zoom = 15;
-                mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(),zoom));
+                MapInfoWindowAdapter infoAdapter = new MapInfoWindowAdapter(MainMapActivity.this, trapToSend);
+                mainMap.setInfoWindowAdapter(infoAdapter);
+                float zoom = 15;mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), zoom));
                 return false;
             }
         });
