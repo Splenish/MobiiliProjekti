@@ -1,8 +1,10 @@
 package com.example.test;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,14 +69,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                SharedPrefsHelper helper = new SharedPrefsHelper();
+                helper.clearUserFromPrefs(getBaseContext());
                 Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });
 
+
         configureToTrapList();
         configureToToolbar();
         configureGuides();
+
+        Button shoutboard_button = findViewById(R.id.shoutboard_button);
+        shoutboard_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+        String name = prefs.getString("name", null);
+        String profile_pic = prefs.getString("profile_pic", null);
+        String email = prefs.getString("email", null);
+
+        Log.d("SHOUTBOARD", "name: " + name);
+        Log.d("SHOUTBOARD", "pic: " + profile_pic);
+        Log.d("SHOUTBOARD", "email: " + email);
+
     }
 
 

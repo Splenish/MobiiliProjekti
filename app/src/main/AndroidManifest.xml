@@ -6,15 +6,19 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ExtendedApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="Manko"
+        android:label="Cat Cube"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/CatCube">
+        >
         <activity android:name=".Bottom_Nav_Bar"></activity>
         <activity android:name=".Guide_Activity6" />
         <activity android:name=".Guide_Activity5" />
@@ -30,6 +34,10 @@
             android:name=".Nav_MainToolbar"
             android:label="@string/title_activity_nav__main_toolbar"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".PostCommentsActivity"></activity>
+        <activity android:name=".NewPostActivity" />
+        <activity android:name=".ShoutboardActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
 

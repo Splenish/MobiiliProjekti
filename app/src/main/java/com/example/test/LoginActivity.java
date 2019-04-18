@@ -1,6 +1,7 @@
 package com.example.test;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -68,6 +73,29 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     Log.d("LOGIN", "sign in with email success");
+
+                    FirebaseDatabase.getInstance().getReference("Users").child(mAuth.getCurrentUser()
+                            .getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            User currentUser = dataSnapshot.getValue(User.class);
+                            /*SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+                            editor.putString("name", currentUser.getName());
+                            editor.putString("profile_pic", currentUser.getName());
+                            editor.putString("email", currentUser.getName());
+                            editor.apply();*/
+                            Log.d("SHOUTBOARD", "tungetaan shittii prefsii");
+                            SharedPrefsHelper helper = new SharedPrefsHelper();
+                            helper.userToPrefs(getBaseContext(), currentUser.getName(), currentUser.getProfile_pic(),
+                                    currentUser.getEmail(), mAuth.getCurrentUser().getUid());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                     FirebaseUser user = mAuth.getCurrentUser();
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
