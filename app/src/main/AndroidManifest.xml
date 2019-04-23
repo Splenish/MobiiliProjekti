@@ -18,6 +18,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/CatCube">
+        <activity android:name=".MainMapActivity"></activity>
         <activity android:name=".Bottom_Nav_Bar"></activity>
         <activity android:name=".Guide_Activity6" />
         <activity android:name=".Guide_Activity5" />
@@ -31,7 +32,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Nav_MainToolbar"
-            android:label="@string/title_activity_nav__main_toolbar"
+            android:label="paska"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".PostCommentsActivity"></activity>
