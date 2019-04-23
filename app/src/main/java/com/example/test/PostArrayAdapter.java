@@ -54,6 +54,9 @@ public class PostArrayAdapter extends ArrayAdapter<Post> {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference postRef = db.getReference("shoutboard").child("posts");
 
+        TextView typeText = listItem.findViewById(R.id.type);
+        typeText.setText(currentPost.getPost_type().toUpperCase());
+
 
         TextView number_of_likes = listItem.findViewById(R.id.number_of_likes);
         number_of_likes.setText(currentPost.getLikes() + " Likes");

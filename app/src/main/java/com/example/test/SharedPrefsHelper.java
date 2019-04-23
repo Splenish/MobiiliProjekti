@@ -3,6 +3,14 @@ package com.example.test;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class SharedPrefsHelper {
