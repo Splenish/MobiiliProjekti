@@ -164,6 +164,7 @@ public class NewPostActivity extends AppCompatActivity {
                             myRef.setValue(post).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
+
                                     Log.d("NEW_POST", "tungettii paskaa postiin");
                                     Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
                                     startActivity(intent);
