@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -55,7 +56,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
+        ImageView logoutButton = findViewById(R.id.cattus);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                SharedPrefsHelper helper = new SharedPrefsHelper();
+                helper.clearUserFromPrefs(getBaseContext());
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
         String name = prefs.getString("name", null);
@@ -88,17 +99,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button logoutButton = findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                SharedPrefsHelper helper = new SharedPrefsHelper();
-                helper.clearUserFromPrefs(getBaseContext());
-                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         Button buttonMainMap = findViewById(R.id.button_main_map);
         buttonMainMap.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
 
     /*
