@@ -127,9 +127,18 @@ public class MainActivity extends AppCompatActivity {
         bottomvan.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
-                if (menuItem.getItemId() == R.id.Bottom_Home){
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
+                if (menuItem.getItemId() == R.id.Bottom_Map){
+                    for(Trap trap :trapList){
+                        Log.d("trapPosTest",trap.getPos());
+                    }
+                    if(trapList.size() != 0) {
+                        Intent intentMap = new Intent(getBaseContext(), MainMapActivity.class);
+                        intentMap.putExtra("trapListPassedToMapIntent", trapList);
+                        startActivity(intentMap);
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Initializing traplist", Toast.LENGTH_SHORT).show();
+                    }
                     return true;
                 }
                 else if (menuItem.getItemId() == R.id.Bottom_Traps){
@@ -141,6 +150,16 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (menuItem.getItemId() == R.id.Bottom_Post){
                     Intent intent = new Intent(getBaseContext(), NewPostActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Guides){
+                    Intent intent = new Intent(getBaseContext(), GuideList.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Shout){
+                    Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
                     startActivity(intent);
                     return true;
                 }
@@ -186,6 +205,9 @@ public class MainActivity extends AppCompatActivity {
                 if(aTrap.getOwner().equals(currentUser)) {
                     Log.d("TURPAAN", "trappia perseese: " + aTrap.getTrapID());
                     trapList.add(aTrap);
+                    SharedPrefsHelper helper = new SharedPrefsHelper();
+
+                    helper.saveListToPrefs(trapList, getBaseContext());
                     //Log.d("MAPPIA", "trap added to list url: " + aTrap.getUrlString());
                     //Log.d("PASKA", "size= " + trapList.size());
                 }
@@ -199,6 +221,9 @@ public class MainActivity extends AppCompatActivity {
                     if(trapList.get(i).getTrapID().equals(aTrap.getTrapID())) {
                         trapList.remove(i);
                         trapList.add(i, aTrap);
+                        SharedPrefsHelper helper = new SharedPrefsHelper();
+
+                        helper.saveListToPrefs(trapList, getBaseContext());
                     }
                 }
             }

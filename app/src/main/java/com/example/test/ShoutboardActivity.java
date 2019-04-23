@@ -3,14 +3,17 @@ package com.example.test;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -59,16 +62,6 @@ public class ShoutboardActivity extends AppCompatActivity {
         getShoutboardItems();
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), NewPostActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
 
     }
 
@@ -112,6 +105,51 @@ public class ShoutboardActivity extends AppCompatActivity {
             }
         });
 
+        BottomNavigationView bottomvan = findViewById(R.id.Bottom_Navigation);
+        bottomvan.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
+                SharedPrefsHelper helper = new SharedPrefsHelper();
+                ArrayList<Trap> trapList = helper.getListFromPrefs(getBaseContext());
+                if (menuItem.getItemId() == R.id.Bottom_Map){
+                    for(Trap trap :trapList){
+                        Log.d("trapPosTest",trap.getPos());
+                    }
+                    if(trapList.size() != 0) {
+                        Intent intentMap = new Intent(getBaseContext(), MainMapActivity.class);
+                        intentMap.putExtra("trapListPassedToMapIntent", trapList);
+                        startActivity(intentMap);
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(), "Initializing traplist", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Traps){
+                    Intent intent = new Intent(getBaseContext(), TrapList.class);
+                    intent.putExtra("trapListPassedToIntent", trapList);
+                    //Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Post){
+                    Intent intent = new Intent(getBaseContext(), NewPostActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Guides){
+                    Intent intent = new Intent(getBaseContext(), GuideList.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Shout){
+                    Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
     }

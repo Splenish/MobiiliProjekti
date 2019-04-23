@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/CatCube"
         >
-        <activity android:name=".MainMapActivity"></activity>
+        <activity android:name=".MainMapActivity"
+            android:label="El Map"
+            android:theme="@style/CatCube"></activity>
         <activity android:name=".Bottom_Nav_Bar"></activity>
 
         <activity android:name=".Guide_Activity6" />
@@ -31,10 +33,10 @@
         <activity
             android:name=".GuideList"
             android:label="Guide Mista"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/CatCube" />
         <activity
             android:name=".Nav_MainToolbar"
-            android:label="paska"
+            android:label="yeet"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".PostCommentsActivity"></activity>
@@ -72,7 +74,7 @@
         </activity>
         <activity
             android:name=".TrapList"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/CatCube" />
     </application>
 
 </manifest>

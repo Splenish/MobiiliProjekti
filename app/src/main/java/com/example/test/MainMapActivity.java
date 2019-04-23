@@ -10,12 +10,15 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,6 +60,51 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_main);
         mapFragment.getMapAsync(this);
 
+        BottomNavigationView bottomvan = findViewById(R.id.Bottom_Navigation);
+        bottomvan.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
+                SharedPrefsHelper helper = new SharedPrefsHelper();
+                ArrayList<Trap> trapList = helper.getListFromPrefs(getBaseContext());
+                if (menuItem.getItemId() == R.id.Bottom_Map){
+                    for(Trap trap :trapList){
+                        Log.d("trapPosTest",trap.getPos());
+                    }
+                    if(trapList.size() != 0) {
+                        Intent intentMap = new Intent(getBaseContext(), MainMapActivity.class);
+                        intentMap.putExtra("trapListPassedToMapIntent", trapList);
+                        startActivity(intentMap);
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(), "Initializing traplist", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Traps){
+                    Intent intent = new Intent(getBaseContext(), TrapList.class);
+                    intent.putExtra("trapListPassedToIntent", trapList);
+                    //Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Post){
+                    Intent intent = new Intent(getBaseContext(), NewPostActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Guides){
+                    Intent intent = new Intent(getBaseContext(), GuideList.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Shout){
+                    Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private Bitmap getMarkerBitmapFromView(@DrawableRes int resId) {
@@ -187,5 +235,7 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
                 }
             }
         });
+
+
     }
 }
