@@ -13,19 +13,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.Random;
 
 import static com.example.test.ExtendedApplication.MY_PREFS_NAME;
 
@@ -35,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private static final int PICK_IMAGE = 111;
     Uri imageUri;
+    String profilepicHardCoded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,15 +91,55 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void createAccount(final String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    public void createAccount(final String email, final String password) {
+        if(imageUri != null) {
+            Random r = new Random();
+            int randomNumber = r.nextInt(Integer.MAX_VALUE);
+            final StorageReference profilePicRef = mStorageRef.child("profilepics/" + FirebaseAuth.getInstance().getUid() + "/" +  randomNumber);
+            final TextView progressText = findViewById(R.id.upload_prompt_register);
+            profilePicRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    profilePicRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Log.d("NEW_POST", uri.toString());
+                            progressText.setText("Upload done!");
+
+                            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("shoutboard").child("posts").push();
+                            String key = myRef.getKey();
+
+                            profilepicHardCoded = uri.toString();
+
+                            createAccnount(email, password);
+
+
+
+                        }
+                    });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    Log.d("NEW_POST", "Upload is " + progress + "% done");
+                    progressText.setText("Upload is " + Math.ceil(progress) + "% done");
+                }
+            });
+        } else {
+
+        }
+    }
+
+    public void createAccnount(final String _email, String _password) {
+        mAuth.createUserWithEmailAndPassword(_email, _password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    String profilepicHardCoded = "https://vignette.wikia.nocookie.net/lpmc/images/9/9d/Sam_hyde.PNG/revision/latest?cb=20171105142606";
+
                     EditText name_field = findViewById(R.id.name_field);
                     String name = name_field.getText().toString();
-                    User newUser =  new User(name, email, profilepicHardCoded);
+                    User newUser =  new User(name, _email, profilepicHardCoded);
 
                     /*
                     SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
@@ -108,8 +156,10 @@ public class RegisterActivity extends AppCompatActivity {
                             .getCurrentUser().getUid()).setValue(newUser);
 
                     Log.d("LOGIN", "user registration successful");
-                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
+
                 } else {
                     Toast.makeText(RegisterActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
                 }

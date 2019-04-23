@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -28,8 +30,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
         String name = prefs.getString("name", null);
         String profile_pic = prefs.getString("profile_pic", null);
@@ -59,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SHOUTBOARD", "email: " + email);
         Log.d("SHOUTBOARD", "currentser: " + currentUser);
 
-        configureToTrapList();
+        // configureToTrapList();
 
         //Log.d("SERVIISI2", "mainactivity on create");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("traps");
 
 
-        Button pushDataButton = findViewById(R.id.the_button);
+        /*Button pushDataButton = findViewById(R.id.the_button);
         pushDataButton.setOnClickListener(new View.OnClickListener() {
             EditText nameText = findViewById(R.id.name_edit);
             @Override
@@ -109,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         configureToTrapList();
         configureToToolbar();
         configureGuides();
@@ -120,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
 
         BottomNavigationView bottomvan = findViewById(R.id.Bottom_Navigation);
@@ -170,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    /*
     private void configureToToolbar() {
         Button ToToolbar = (Button) findViewById(R.id.ToToolbar);
         ToToolbar.setOnClickListener(new View.OnClickListener() {
@@ -191,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    */
 
     public void getOwnedTraps() {
 
@@ -247,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    /*
     private void configureToTrapList() {
         Button ToTrapList = (Button) findViewById(R.id.ToTrapList);
         ToTrapList.setOnClickListener(new View.OnClickListener() {
@@ -260,6 +272,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 
 }
