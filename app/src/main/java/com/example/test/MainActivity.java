@@ -54,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SHOUTBOARD", "email: " + email);
         Log.d("SHOUTBOARD", "currentser: " + currentUser);
 
-        configureToTrapList();
+        // configureToTrapList();
 
         //Log.d("SERVIISI2", "mainactivity on create");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("traps");
 
 
-        Button pushDataButton = findViewById(R.id.the_button);
+        /*Button pushDataButton = findViewById(R.id.the_button);
         pushDataButton.setOnClickListener(new View.OnClickListener() {
             EditText nameText = findViewById(R.id.name_edit);
             @Override
@@ -115,12 +115,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 
 
-
+    /*
     private void configureToToolbar() {
         Button ToToolbar = (Button) findViewById(R.id.ToToolbar);
         ToToolbar.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    */
 
     public void getOwnedTraps() {
 
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    /*
     private void configureToTrapList() {
         Button ToTrapList = (Button) findViewById(R.id.ToTrapList);
         ToTrapList.setOnClickListener(new View.OnClickListener() {
@@ -204,6 +205,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 
 }
