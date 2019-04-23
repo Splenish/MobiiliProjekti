@@ -67,6 +67,7 @@ public class MyService extends Service {
         return START_REDELIVER_INTENT;
     }
     public void notificationHandle(DataSnapshot data) {
+        Log.d("SERVICETEST", "nyt ollaan jännän äärellä.");
         //Intent returnIntent = new Intent(this, MainActivity.class);
         //Log.d("MAPPIA", "data get key: " + data.getKey().toString());
         data.getRef().getParent().addListenerForSingleValueEvent(new ValueEventListener() {
@@ -118,13 +119,14 @@ public class MyService extends Service {
         Log.d("SERVICETEST", "servicee tullee trap ID " + trapPassedFromIntent.getTrapID());
         //Log.d("SERVIISI", "gOT trap ID : " + trapPassedFromIntent.getTrapID());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference trapRefs = database.getReference("traps").child(trapPassedFromIntent.getTrapID()).child("triggered");
+        DatabaseReference trapRefs = database.getReference("traps").child(trapPassedFromIntent.getTrapID()).child("triggered");
 
+        Log.d("SERVICETEST", "testi2");
         trapRefs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //Log.d("SERVIISI", "Specific trap triggered " + dataSnapshot.getValue());
-
+                Log.d("SERVICETEST", "testi");
                 if(dataSnapshot.getValue().toString().equals("true")) {
                     //Log.d("SERVIISI", "loukkusi " + dataSnapshot.getRef().getParent().getKey() + " on lauennut");
                     notificationHandle(dataSnapshot);
