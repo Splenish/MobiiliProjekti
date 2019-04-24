@@ -1,6 +1,7 @@
 package com.example.test;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
@@ -67,6 +68,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         Log.d("SERVICETEST", "trapPassedFromIntent ID " + trapPassedFromIntent.getTrapID());
         posString = trapPassedFromIntent.getPos();
 
+
         String[] latLng = posString.split(",");
         Geocoder geocoder = new Geocoder(this);
 
@@ -95,6 +97,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         });
 
         trapName.setText("Trap " + trapPassedFromIntent.getTrapID());
+
+        TextView user_name = findViewById(R.id.owner_text_username);
+        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+        String name = prefs.getString("name", null);
+        user_name.setText(name);
+
         if(trapPassedFromIntent.getTriggered()) {
             trapStateText.setText("Trap triggered");
         } else {
@@ -142,7 +150,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         putMarkerToCoord();
-
     }
 
     public void putMarkerToCoord() {
