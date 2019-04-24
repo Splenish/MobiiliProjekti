@@ -20,27 +20,43 @@
         android:theme="@style/CatCube"
         >
         <activity android:name=".MainMapActivity"
-            android:label="El Map"></activity>
+            android:label="Map"></activity>
         <activity android:name=".Bottom_Nav_Bar"></activity>
 
-        <activity android:name=".Guide_Activity6" />
-        <activity android:name=".Guide_Activity5" />
-        <activity android:name=".Guide_Activity4" />
-        <activity android:name=".Guide_Activity3" />
-        <activity android:name=".Guide_Activity2" />
-        <activity android:name=".Guide_Activity1" />
+        <activity android:name=".Guide_Activity6"
+            android:label="Villi vai kesy?"/>
+        <activity android:name=".Guide_Activity5"
+            android:label="Talteenotetut"
+            />
+        <activity android:name=".Guide_Activity4"
+            android:label="Miksi loukutetaan?"
+            />
+        <activity android:name=".Guide_Activity3"
+            android:label="The Cube"/>
+        <activity android:name=".Guide_Activity2"
+            android:label="Viritysohjeet"/>
+        <activity android:name=".Guide_Activity1"
+            android:label="Toimintaohjeet"
+            />
         <activity
             android:name=".GuideList"
-            android:label="Guide Mista"
+            android:label="Guides"
             android:theme="@style/CatCube" />
         <activity
             android:name=".Nav_MainToolbar"
             android:label="yeet"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".PostCommentsActivity"></activity>
-        <activity android:name=".NewPostActivity" />
-        <activity android:name=".ShoutboardActivity" />
+        <activity android:name=".PostCommentsActivity"
+            android:label="Comments"
+            ></activity>
+        <activity android:name=".NewPostActivity"
+            android:label="New Post"
+            />
+        <activity
+            android:name=".ShoutboardActivity"
+            android:label="Feed"
+            />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" >
             <intent-filter>
@@ -73,6 +89,7 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity
+            android:label="Active Traps"
             android:name=".TrapList"
             android:theme="@style/CatCube" />
     </application>
