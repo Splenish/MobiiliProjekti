@@ -30,13 +30,13 @@ public class GuideList extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.GuideList);
         ArrayList<Guide> GuideList = new ArrayList<>();
-        GuideList.add(new Guide(R.drawable.lily_340_235, "Loukuttamisen Toimintaohjeet" , "meow meow meow, purr purr purr, guide my whiskers pet my fur"));
+        GuideList.add(new Guide(R.drawable.lily_340_235, "Loukuttamisen Toimintaohjeet" , "Yleisohjeet kissojen loukutuseen"));
 
-        GuideList.add(new Guide(R.drawable.lily2_340_235, "Loukun Viritysohjeet" , "The cat is on the prowl, the dogs are coming out"));
-        GuideList.add(new Guide(R.drawable.lily3_340_235, "Tutustu The Cube-älylaitteeseen" , "Baby they chase me, up and down my street, as soon as I slow down, another comes around trying to fetch me, like am his treat"));
-        GuideList.add(new Guide(R.drawable.lily4_340_235, "Miksi kissoja loukutetaan?" , "The booty is on the duty, for me, scatch my back, I'll scratch yours."));
-        GuideList.add(new Guide(R.drawable.lily5_340_235, "Talteenotetut eläimet" , "Slap Bass"));
-        GuideList.add(new Guide(R.drawable.lily6_340_235, "Villiintynyt kissa vai kesy lemmikki?" , "Ping pong ching chong taekwondo ying yang"));
+        GuideList.add(new Guide(R.drawable.lily2_340_235, "Loukun Viritysohjeet" , "Ohjeet askeleittain loukun viritykseen"));
+        GuideList.add(new Guide(R.drawable.lily3_340_235, "Tutustu The Cube-älylaitteeseen" , "The Cube tekee auttaa sekä loukutettuja kissoja, että loukuttajaa"));
+        GuideList.add(new Guide(R.drawable.lily4_340_235, "Miksi kissoja loukutetaan?" , "Suomessa hylätään vuodessa 20 000 kissaa"));
+        GuideList.add(new Guide(R.drawable.lily5_340_235, "Talteenotetut eläimet" , "Mitä talteenotetulla eläimelle tehdään?"));
+        GuideList.add(new Guide(R.drawable.lily6_340_235, "Villiintynyt kissa vai kesy lemmikki?" , "Luontoon hylätty tai siellä syntynyt kissa voi villiintyä"));
 
         GuideArrayAdapter guideAdapter = new GuideArrayAdapter(this, GuideList);
         listView.setAdapter(guideAdapter);
