@@ -169,10 +169,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             float lng = Float.parseFloat(latLng[1]);
             LatLng trapLocation = new LatLng(lat, lng);
 
+            //Log.d("LOCATION", lat + ", " + lng);
+
+            Log.d("LOCATION", trapLocation.latitude + "," + trapLocation.longitude);
+
             trapMarker = mMap.addMarker(new MarkerOptions().position(trapLocation).title(trapPassedFromIntent.getTrapID()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(trapLocation));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trapLocation, 10));
         } catch (Exception e) {
             TextView address = findViewById(R.id.trap_address);
             address.setText("No location available");
@@ -192,10 +194,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
             LatLng trapLocation = new LatLng(lat, lng);
 
+            Log.d("LOCATION", lat + ", " + lng);
+
             trapMarker.setPosition(trapLocation);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(trapLocation));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(trapLocation, 10));
         } catch (Exception e) {
             TextView address = findViewById(R.id.trap_address);
             address.setText("No location available");
