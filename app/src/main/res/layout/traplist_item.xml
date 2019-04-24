@@ -15,7 +15,6 @@
         />
 
     <TextView
-        android:textColor="#FFFFFF"
         android:id="@+id/textView_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +29,6 @@
         />
 
     <TextView
-        android:textColor="#FFFFFF"
         android:id="@+id/textView_release"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
