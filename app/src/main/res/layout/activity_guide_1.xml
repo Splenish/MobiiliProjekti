@@ -26,7 +26,7 @@
             android:orientation="vertical">
 
             <TextView
-
+                android:textColor="#FFFFFF"
                 android:paddingLeft="10dp"
                 android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
@@ -39,6 +39,7 @@
 
             <TextView
 
+                android:textColor="#FFFFFF"
                 android:padding="10dp"
                 android:id="@+id/textViewContent"
                 android:layout_width="match_parent"
