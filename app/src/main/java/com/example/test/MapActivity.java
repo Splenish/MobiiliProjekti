@@ -153,8 +153,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         LatLng trapLocation = new LatLng(lat, lng);
 
-        trapMarker = mMap.addMarker(new MarkerOptions().position(trapLocation).title("Trap 01"));
+        trapMarker = mMap.addMarker(new MarkerOptions().position(trapLocation).title(trapPassedFromIntent.getTrapID()));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(trapLocation));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
 
