@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -50,10 +51,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        //Log.d("PASKAMAKE", "vittu");
         super.onCreate(savedInstanceState, persistentState);
-        //Log.d("PASKAMAKE", "saatana");
-
     }
 
     @Override
@@ -64,9 +62,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         TextView trapStateText = findViewById(R.id.trap_state_text);
         Intent intent = getIntent();
 
+
+
         trapPassedFromIntent = (Trap) intent.getSerializableExtra("trapIntent");
         Log.d("SERVICETEST", "trapPassedFromIntent ID " + trapPassedFromIntent.getTrapID());
         posString = trapPassedFromIntent.getPos();
+
 
 
         String[] latLng = posString.split(",");
@@ -92,6 +93,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 final DatabaseReference myRef = database.getReference("traps");
                 DatabaseReference objRef = myRef.child(trapPassedFromIntent.getTrapID());
                 objRef.child("triggered").setValue(false);
+                Toast.makeText(MapActivity.this, "Trap reset!", Toast.LENGTH_SHORT).show();
                 //objRef.setValue("triggered", false);
             }
         });
@@ -117,8 +119,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if(trapPassedFromIntent.getTriggered()) {
             Picasso.get().load(trapPassedFromIntent.getUrlString()).into(cat_pic);
             Log.d("MAPPIA", "url string " + trapPassedFromIntent.getUrlString());
+            TextView text = findViewById(R.id.cat_announcement);
+            text.setVisibility(View.INVISIBLE);
         } else {
             Picasso.get().load(getString(R.string.default_trap_pic_url)).into(cat_pic);
+            TextView text = findViewById(R.id.cat_announcement);
+            text.setVisibility(View.VISIBLE);
         }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

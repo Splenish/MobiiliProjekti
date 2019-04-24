@@ -89,10 +89,8 @@ public class MyService extends Service {
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, returnIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getBaseContext(), CHANNEL_ID)
-                        .setSmallIcon(R.drawable.notification_icon)
+                        .setSmallIcon(R.drawable.paw)
                         .setContentTitle("Loukku lauennut!")
                         .setContentText("loukkusi " + aTrap.getTrapID() + " on lauennut")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)

@@ -23,8 +23,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -154,6 +157,32 @@ public class RegisterActivity extends AppCompatActivity {
 
                     FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance()
                             .getCurrentUser().getUid()).setValue(newUser);
+
+                    //Testiloukku, joka generoidaan käyttäjälle, jotta loukkulistassa, loukkunäkymässä ja kartassa
+                    //on toiminnallisuutta
+
+
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("traps");
+
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Log.d("TRAPTEST", dataSnapshot.getChildrenCount() + "");
+                            String childString = "0"+dataSnapshot.getChildrenCount()+1;
+                            final Trap aTrap = new Trap(FirebaseAuth.getInstance().getCurrentUser().getUid(), "65.0,25.52", false,
+                                    childString,"https://www.arfhamptons.org/wp-content/uploads/2015/04/feral-cat-in-trap.jpg");
+                            FirebaseDatabase.getInstance().getReference("traps").child(childString).setValue(aTrap);
+                            for (DataSnapshot snap: dataSnapshot.getChildren()) {
+                                Log.e(snap.getKey(),snap.getChildrenCount() + "");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
                     Log.d("LOGIN", "user registration successful");
 
