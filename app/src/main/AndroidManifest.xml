@@ -21,7 +21,6 @@
         >
         <activity android:name=".MainMapActivity"
             android:label="El Map"></activity>
-        android:theme="@style/CatCube">
         <activity android:name=".Bottom_Nav_Bar"></activity>
 
         <activity android:name=".Guide_Activity6" />
