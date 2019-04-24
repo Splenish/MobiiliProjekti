@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,8 +46,19 @@ public class PostArrayAdapter extends ArrayAdapter<Post> {
         final Post currentPost = postList.get(position);
 
         TextView timeText = (TextView) listItem.findViewById(R.id.time_stamp);
-        Date time_stamp = new java.util.Date(currentPost.time_stamp);
-        timeText.setText(time_stamp.toString());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(currentPost.getTime_stamp());
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        String minute_string = "";
+        if(minute < 10) {
+            minute_string = "0" + minute;
+        } else {
+            minute_string = minute + "";
+        }
+        String time_stamp = hour + ":" + minute_string
+                + " " + calendar.get(Calendar.DAY_OF_MONTH) + "." + calendar.get(Calendar.MONTH);
+        timeText.setText(time_stamp);
 
         ImageView image = (ImageView)listItem.findViewById(R.id.post_pic);
         Picasso.get().load(currentPost.getPicture()).into(image);

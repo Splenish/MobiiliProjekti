@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Map"
+        android:id="@+id/Bottom_Map"
+        android:icon="@drawable/ic_paws" />
+    <item android:title="Traps"
+        android:id="@+id/Bottom_Traps"
+        android:icon="@drawable/ic_cage" />
+    <item android:title="Post"
+        android:id="@+id/Bottom_Post"
+        android:icon="@drawable/ic_control_point_black_24dp" />
+    <item android:title="Guides"
+        android:id="@+id/Bottom_Guides"
+        android:icon="@drawable/ic_yarn" />
+    <item android:title="Shout"
+        
+        android:id="@+id/Bottom_Shout"
+        android:icon="@drawable/ic_smug_mug" />
+</menu>

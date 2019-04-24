@@ -10,12 +10,19 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,6 +64,64 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_main);
         mapFragment.getMapAsync(this);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.Bottom_Navigation);
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+        for (int i = 0; i < menuView.getChildCount(); i++) {
+            final View iconView = menuView.getChildAt(i).findViewById(android.support.design.R.id.icon);
+            final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
+            final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            // set your height here
+            layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, displayMetrics);
+            // set your width here
+            layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, displayMetrics);
+            iconView.setLayoutParams(layoutParams);
+        }
+
+        BottomNavigationView bottomvan = findViewById(R.id.Bottom_Navigation);
+        bottomvan.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
+                SharedPrefsHelper helper = new SharedPrefsHelper();
+                ArrayList<Trap> trapList = helper.getListFromPrefs(getBaseContext());
+                if (menuItem.getItemId() == R.id.Bottom_Map){
+                    for(Trap trap :trapList){
+                        Log.d("trapPosTest",trap.getPos());
+                    }
+                    if(trapList.size() != 0) {
+                        Intent intentMap = new Intent(getBaseContext(), MainMapActivity.class);
+                        intentMap.putExtra("trapListPassedToMapIntent", trapList);
+                        startActivity(intentMap);
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(), "Initializing traplist", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Traps){
+                    Intent intent = new Intent(getBaseContext(), TrapList.class);
+                    intent.putExtra("trapListPassedToIntent", trapList);
+                    //Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Post){
+                    Intent intent = new Intent(getBaseContext(), NewPostActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Guides){
+                    Intent intent = new Intent(getBaseContext(), GuideList.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Shout){
+                    Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private Bitmap getMarkerBitmapFromView(@DrawableRes int resId) {
@@ -187,5 +252,7 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
                 }
             }
         });
+
+
     }
 }

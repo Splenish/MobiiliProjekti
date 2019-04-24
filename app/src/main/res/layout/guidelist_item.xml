@@ -13,6 +13,7 @@
         android:padding="0dp"/>
 
     <TextView
+        android:textColor="#FFFFFF"
         android:id="@+id/textView_title"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
         android:textStyle="bold"/>
 
     <TextView
+        android:textColor="#FFFFFF"
         android:id="@+id/textView_text"
         android:layout_width="260dp"
         android:layout_height="wrap_content"

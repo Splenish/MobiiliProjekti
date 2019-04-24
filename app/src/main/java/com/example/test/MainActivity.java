@@ -5,12 +5,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -50,7 +60,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
+        ImageView logoutButton = findViewById(R.id.cattus);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                SharedPrefsHelper helper = new SharedPrefsHelper();
+                helper.clearUserFromPrefs(getBaseContext());
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
         String name = prefs.getString("name", null);
@@ -63,14 +83,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SHOUTBOARD", "email: " + email);
         Log.d("SHOUTBOARD", "currentser: " + currentUser);
 
-        configureToTrapList();
+        // configureToTrapList();
 
         //Log.d("SERVIISI2", "mainactivity on create");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("traps");
 
 
-        Button pushDataButton = findViewById(R.id.the_button);
+        /*Button pushDataButton = findViewById(R.id.the_button);
         pushDataButton.setOnClickListener(new View.OnClickListener() {
             EditText nameText = findViewById(R.id.name_edit);
             @Override
@@ -83,17 +103,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button logoutButton = findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                SharedPrefsHelper helper = new SharedPrefsHelper();
-                helper.clearUserFromPrefs(getBaseContext());
-                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         Button buttonMainMap = findViewById(R.id.button_main_map);
         buttonMainMap.setOnClickListener(new View.OnClickListener() {
@@ -126,12 +136,73 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.Bottom_Navigation);
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+        for (int i = 0; i < menuView.getChildCount(); i++) {
+            final View iconView = menuView.getChildAt(i).findViewById(android.support.design.R.id.icon);
+            final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
+            final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            // set your height here
+            layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, displayMetrics);
+            // set your width here
+            layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, displayMetrics);
+            iconView.setLayoutParams(layoutParams);
+        }
+
+        BottomNavigationView bottomvan = findViewById(R.id.Bottom_Navigation);
+        bottomvan.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
+                if (menuItem.getItemId() == R.id.Bottom_Map){
+                    for(Trap trap :trapList){
+                        Log.d("trapPosTest",trap.getPos());
+                    }
+                    if(trapList.size() != 0) {
+                        Intent intentMap = new Intent(getBaseContext(), MainMapActivity.class);
+                        intentMap.putExtra("trapListPassedToMapIntent", trapList);
+                        startActivity(intentMap);
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Initializing traplist", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Traps){
+                    Intent intent = new Intent(getBaseContext(), TrapList.class);
+                    intent.putExtra("trapListPassedToIntent", trapList);
+                    //Log.d("SERVIISI3","Intenttii menevä listan size: " + trapList.size());
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Post){
+                    Intent intent = new Intent(getBaseContext(), NewPostActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Guides){
+                    Intent intent = new Intent(getBaseContext(), GuideList.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else if (menuItem.getItemId() == R.id.Bottom_Shout){
+                    Intent intent = new Intent(getBaseContext(), ShoutboardActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
+        //------------------------------------------------shitfuck------------------------------------
+        //bottomvan.setSelectedItemId(R.id.Bottom_Post);
     }
 
 
 
+    /*
     private void configureToToolbar() {
         Button ToToolbar = (Button) findViewById(R.id.ToToolbar);
         ToToolbar.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    */
 
     public void getOwnedTraps() {
 
@@ -166,6 +238,9 @@ public class MainActivity extends AppCompatActivity {
                 if(aTrap.getOwner().equals(currentUser)) {
                     Log.d("TURPAAN", "trappia perseese: " + aTrap.getTrapID());
                     trapList.add(aTrap);
+                    SharedPrefsHelper helper = new SharedPrefsHelper();
+
+                    helper.saveListToPrefs(trapList, getBaseContext());
                     //Log.d("MAPPIA", "trap added to list url: " + aTrap.getUrlString());
                     //Log.d("PASKA", "size= " + trapList.size());
                 }
@@ -179,6 +254,9 @@ public class MainActivity extends AppCompatActivity {
                     if(trapList.get(i).getTrapID().equals(aTrap.getTrapID())) {
                         trapList.remove(i);
                         trapList.add(i, aTrap);
+                        SharedPrefsHelper helper = new SharedPrefsHelper();
+
+                        helper.saveListToPrefs(trapList, getBaseContext());
                     }
                 }
             }
@@ -202,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    /*
     private void configureToTrapList() {
         Button ToTrapList = (Button) findViewById(R.id.ToTrapList);
         ToTrapList.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +293,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 
 }

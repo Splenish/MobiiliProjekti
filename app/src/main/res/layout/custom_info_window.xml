@@ -14,7 +14,7 @@
         android:id="@+id/image_info_window"
         android:layout_width="170dp"
         android:layout_height="100dp"
-        android:src="@drawable/coolcat"/>
+        android:src="@drawable/ainsley"/>
 
     <TextView
         android:id="@+id/text_info_window"

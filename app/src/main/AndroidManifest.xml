@@ -17,9 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/CatCube">
-        <activity android:name=".MainMapActivity"></activity>
+        android:theme="@style/CatCube"
+        >
+        <activity android:name=".MainMapActivity"
+            android:label="El Map"></activity>
         <activity android:name=".Bottom_Nav_Bar"></activity>
+
         <activity android:name=".Guide_Activity6" />
         <activity android:name=".Guide_Activity5" />
         <activity android:name=".Guide_Activity4" />
@@ -29,10 +32,10 @@
         <activity
             android:name=".GuideList"
             android:label="Guide Mista"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/CatCube" />
         <activity
             android:name=".Nav_MainToolbar"
-            android:label="paska"
+            android:label="yeet"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".PostCommentsActivity"></activity>
@@ -71,7 +74,7 @@
         </activity>
         <activity
             android:name=".TrapList"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/CatCube" />
     </application>
 
 </manifest>
