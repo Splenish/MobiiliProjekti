@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
 
+
         BottomNavigationView bottomvan = findViewById(R.id.Bottom_Navigation);
         bottomvan.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -178,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
+        //------------------------------------------------shitfuck------------------------------------
+        //bottomvan.setSelectedItemId(R.id.Bottom_Post);
     }
 
 
