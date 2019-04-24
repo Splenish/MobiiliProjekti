@@ -183,9 +183,14 @@ public class MainMapActivity  extends FragmentActivity implements OnMapReadyCall
 
         for(Trap trap : TrapList){
             String[] latLngStrings = trap.getPos().split(",");
-            LatLng latLng = new LatLng(Double.parseDouble(latLngStrings[0]),Double.parseDouble(latLngStrings[1]));
-            Marker marker = mainMap.addMarker(new MarkerOptions().position(latLng).title(trap.getTrapID()).icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.trap_marker))));
-            markerList.add(marker);
+            try {
+                LatLng latLng = new LatLng(Double.parseDouble(latLngStrings[0]),Double.parseDouble(latLngStrings[1]));
+                Marker marker = mainMap.addMarker(new MarkerOptions().position(latLng).title(trap.getTrapID()).icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.trap_marker))));
+                markerList.add(marker);
+            } catch (Exception e) {
+                Log.e("MYAPP", "exception", e);
+            }
+
         }
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();

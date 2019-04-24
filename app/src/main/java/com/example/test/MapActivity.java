@@ -81,8 +81,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             TextView address = findViewById(R.id.trap_address);
             address.setText(matches.get(0).getAddressLine(0));
         } catch (Exception e) {
+            TextView address = findViewById(R.id.trap_address);
+            address.setText("No location available");
             Log.d("MAPPIA", "Geocode error");
             Log.e("MAPPIA", "expection", e);
+
         }
 
         Button reset_btn = findViewById(R.id.resetButton);
@@ -161,28 +164,44 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void putMarkerToCoord() {
         String[] latLng = posString.split(",");
 
-        float lat = Float.parseFloat(latLng[0]);
-        float lng = Float.parseFloat(latLng[1]);
+        try{
+            float lat = Float.parseFloat(latLng[0]);
+            float lng = Float.parseFloat(latLng[1]);
+            LatLng trapLocation = new LatLng(lat, lng);
 
-        LatLng trapLocation = new LatLng(lat, lng);
+            trapMarker = mMap.addMarker(new MarkerOptions().position(trapLocation).title(trapPassedFromIntent.getTrapID()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(trapLocation));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+        } catch (Exception e) {
+            TextView address = findViewById(R.id.trap_address);
+            address.setText("No location available");
+        }
 
-        trapMarker = mMap.addMarker(new MarkerOptions().position(trapLocation).title(trapPassedFromIntent.getTrapID()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(trapLocation));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+
+
     }
 
 
     public void updateMarker() {
         String[] latLng = posString.split(",");
 
-        float lat = Float.parseFloat(latLng[0]);
-        float lng = Float.parseFloat(latLng[1]);
+        try {
+            float lat = Float.parseFloat(latLng[0]);
+            float lng = Float.parseFloat(latLng[1]);
 
-        LatLng trapLocation = new LatLng(lat, lng);
+            LatLng trapLocation = new LatLng(lat, lng);
 
-        trapMarker.setPosition(trapLocation);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
+            trapMarker.setPosition(trapLocation);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(trapLocation));
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(trapLocation));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+        } catch (Exception e) {
+            TextView address = findViewById(R.id.trap_address);
+            address.setText("No location available");
+        }
+
+
     }
 
 
