@@ -100,7 +100,7 @@
         style="@style/main_menu_circle"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cat_pic"
-        android:layout_margin="40dp"
+        android:layout_margin="20dp"
         android:backgroundTint="#A171AD"
         android:id="@+id/circle"
         ></View>
@@ -112,7 +112,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cat_pic"
         android:tint="@color/colorAccent"
-        android:layout_margin="45dp"
+        android:layout_margin="25dp"
         />
 
     <TextView
@@ -199,7 +199,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         style="@style/title_block"
         android:textColor="@color/colorAccent"
-        android:text="Edit"
+        android:text="Share"
         android:textAllCaps="false"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="30dp"
