@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 public class ExtendedApplication extends Application {
 
     ArrayList<Trap> ownedTraps = new ArrayList<>();
-    String currentUser = "01";
+    String currentUser;
     static boolean IS_APP_STARTUP = true;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
 
@@ -32,6 +33,10 @@ public class ExtendedApplication extends Application {
         FirebaseApp.initializeApp(this);
         createNotificationChannel();
 
+        Log.d("MYAPP", "testi");
+        SharedPreferences prefs = getSharedPreferences("user", MODE_PRIVATE);
+        currentUser = prefs.getString("uId", null);
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("traps");
 
@@ -41,6 +46,8 @@ public class ExtendedApplication extends Application {
 
                 Trap aTrap = dataSnapshot.getValue(Trap.class);
                 //Log.d("SERVIISI", "aTrap owner get value: " + aTrap.getOwner() + " " +  currentUser);
+
+                Log.d("MYAPP", "paska" + aTrap.getOwner() + ", " + currentUser);
 
                 if (aTrap.getOwner().equals(currentUser)) {
                     Log.d("SERVIISI2", "mennään serviceen");
